@@ -29,6 +29,26 @@ public class TransactionalOperationsTest extends EntityManagerTest {
     }
 
     @Test
+    public void objectInsertMerge() {
+        Product product = new Product();
+
+        product.setId(4);
+        product.setName("Rode Videomic Microphone");
+        product.setDescription("The best sound quality.");
+        product.setPrice(new BigDecimal(1000));
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(product);
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Product checkProduct = entityManager.find(Product.class, product.getId());
+
+        Assert.assertNotNull(checkProduct);
+    }
+
+    @Test
     public void objectUpdate() {
         Product product = new Product();
 
