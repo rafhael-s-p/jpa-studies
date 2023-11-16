@@ -50,6 +50,21 @@ public class TransactionalOperationsTest extends EntityManagerTest {
     }
 
     @Test
+    public void managedObjectUpdate() {
+        Product product = entityManager.find(Product.class, 1);
+
+        entityManager.getTransaction().begin();
+        product.setName("Kindle Paperwhite 2nd Generation");
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Product checkProduct = entityManager.find(Product.class, product.getId());
+
+        Assert.assertEquals("Kindle Paperwhite 2nd Generation", checkProduct.getName());
+    }
+
+    @Test
     public void objectDelete() {
         Product product = entityManager.find(Product.class, 3);
 
