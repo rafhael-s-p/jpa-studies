@@ -1,0 +1,1 @@
+# Project for JPA study purposes
