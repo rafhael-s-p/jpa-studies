@@ -138,4 +138,20 @@ public class ProductOperationsTest extends EntityManagerTest {
         Assert.assertNotNull(checkProductMerge);
     }
 
+    @Test
+    public void preventDatabaseOperation() {
+        Product product = entityManager.find(Product.class, 1);
+        entityManager.detach(product);
+
+        entityManager.getTransaction().begin();
+        product.setName("Kindle Paperwhite 2nd Generation");
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Product checkProduct = entityManager.find(Product.class, product.getId());
+
+        Assert.assertEquals("Kindle", checkProduct.getName());
+    }
+
 }
