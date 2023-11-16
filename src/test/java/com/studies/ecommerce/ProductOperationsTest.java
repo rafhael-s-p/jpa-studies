@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-public class TransactionalOperationsTest extends EntityManagerTest {
+public class ProductOperationsTest extends EntityManagerTest {
 
     @Test
     public void objectInsert() {
