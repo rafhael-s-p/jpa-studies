@@ -28,4 +28,17 @@ public class TransactionalOperationsTest extends EntityManagerTest {
         Assert.assertNotNull(checkProduct);
     }
 
+    @Test
+    public void ObjectRemoval() {
+        Product product = entityManager.find(Product.class, 3);
+
+        entityManager.getTransaction().begin();
+        entityManager.remove(product);
+        entityManager.getTransaction().commit();
+
+        Product checkProduct = entityManager.find(Product.class, 3);
+
+        Assert.assertNull(checkProduct);
+    }
+
 }
