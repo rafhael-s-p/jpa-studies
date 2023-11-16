@@ -97,4 +97,45 @@ public class TransactionalOperationsTest extends EntityManagerTest {
         Assert.assertNull(checkProduct);
     }
 
+    @Test
+    public void differenceBetweenPersistAndMerge() {
+        // PERSIST
+        Product productPersist = new Product();
+
+        productPersist.setId(5);
+        productPersist.setName("One Plus Smartphone");
+        productPersist.setDescription("The fastest processor.");
+        productPersist.setPrice(new BigDecimal(2000));
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(productPersist);
+        productPersist.setName("One Plus Deluxe Smartphone");
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Product checkProductPersist = entityManager.find(Product.class, productPersist.getId());
+
+        Assert.assertNotNull(checkProductPersist);
+
+        // MERGE
+        Product productMerge = new Product();
+
+        productMerge.setId(6);
+        productMerge.setName("Dell Laptop");
+        productMerge.setDescription("The best in the category.");
+        productMerge.setPrice(new BigDecimal(2000));
+
+        entityManager.getTransaction().begin();
+        productMerge = entityManager.merge(productMerge);
+        productMerge.setName("Dell Laptop Deluxe");
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Product checkProductMerge = entityManager.find(Product.class, productMerge.getId());
+
+        Assert.assertNotNull(checkProductMerge);
+    }
+
 }
