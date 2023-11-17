@@ -11,14 +11,15 @@ import javax.persistence.Id;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Client {
+public class CardPayment {
 
     @EqualsAndHashCode.Include
     @Id
     private Integer id;
 
-    private String name;
+    private Integer orderId;
 
-    private Gender gender;
+    private PaymentStatus status;
 
+    private String number;
 }
