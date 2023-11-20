@@ -10,7 +10,6 @@ public class ClientOperationsTest extends EntityManagerTest {
     public void objectInsert() {
         Client client = new Client();
 
-        client.setId(3);
         client.setName("Roxana Brylee");
 
         entityManager.getTransaction().begin();

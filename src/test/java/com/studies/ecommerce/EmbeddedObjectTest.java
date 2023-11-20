@@ -24,7 +24,7 @@ public class EmbeddedObjectTest extends EntityManagerTest {
         deliveryAddress.setState("California");
 
         Order order = new Order();
-        order.setId(1);
+
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(OrderStatus.WAITING);
         order.setTotal(new BigDecimal(250));
