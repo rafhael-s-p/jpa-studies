@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "order")
+@Table(name = "tab_order")
 public class Order {
 
     @EqualsAndHashCode.Include
@@ -32,4 +32,9 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @Embedded
+    @Column(name = "delivery_address")
+    private Address deliveryAddress;
+
 }

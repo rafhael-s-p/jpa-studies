@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "invoice")
+@Table(name = "tab_invoice")
 public class Invoice {
 
     @EqualsAndHashCode.Include

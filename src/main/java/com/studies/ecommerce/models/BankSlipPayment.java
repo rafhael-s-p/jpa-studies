@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "bank_slip_payment")
+@Table(name = "tab_bank_slip_payment")
 public class BankSlipPayment {
 
     @EqualsAndHashCode.Include

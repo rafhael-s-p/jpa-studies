@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "warehouse")
+@Table(name = "tab_warehouse")
 public class Warehouse {
 
     @EqualsAndHashCode.Include
