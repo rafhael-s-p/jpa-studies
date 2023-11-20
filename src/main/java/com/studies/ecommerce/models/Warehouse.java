@@ -10,16 +10,16 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tab_client")
-public class Client {
+@Table(name = "tab_warehouse")
+public class Warehouse {
 
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @Column(name = "product_id")
+    private Integer productId;
 
-    private Gender gender;
-
+    private Integer amount;
 }

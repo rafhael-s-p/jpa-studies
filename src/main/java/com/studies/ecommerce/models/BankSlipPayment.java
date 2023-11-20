@@ -10,16 +10,19 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tab_client")
-public class Client {
+@Table(name = "tab_bank_slip_payment")
+public class BankSlipPayment {
 
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @Column(name = "order_id")
+    private Integer orderId;
 
-    private Gender gender;
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
 
+    private String barCode;
 }
