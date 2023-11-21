@@ -1,5 +1,6 @@
-package com.studies.ecommerce;
+package com.studies.ecommerce.basicmapping;
 
+import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Address;
 import com.studies.ecommerce.models.Order;
 import com.studies.ecommerce.models.OrderStatus;

@@ -1,5 +1,6 @@
-package com.studies.ecommerce;
+package com.studies.ecommerce.jpastarting;
 
+import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Client;
 import org.junit.Assert;
 import org.junit.Test;

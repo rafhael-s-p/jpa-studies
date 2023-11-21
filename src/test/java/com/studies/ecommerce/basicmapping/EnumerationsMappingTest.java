@@ -1,5 +1,6 @@
-package com.studies.ecommerce;
+package com.studies.ecommerce.basicmapping;
 
+import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Client;
 import com.studies.ecommerce.models.Gender;
 import org.junit.Assert;
