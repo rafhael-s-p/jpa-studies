@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,6 +24,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items;
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;
