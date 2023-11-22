@@ -1,6 +1,8 @@
-package com.studies.ecommerce;
+package com.studies.ecommerce.basicmapping;
 
+import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Address;
+import com.studies.ecommerce.models.Client;
 import com.studies.ecommerce.models.Order;
 import com.studies.ecommerce.models.OrderStatus;
 import org.junit.Assert;
@@ -13,6 +15,8 @@ public class EmbeddedObjectTest extends EntityManagerTest {
 
     @Test
     public void builtInObjectMapping() {
+
+        Client client = entityManager.find(Client.class, 1);
 
         Address deliveryAddress = new Address();
         deliveryAddress.setPostal("11111-111");
@@ -29,6 +33,7 @@ public class EmbeddedObjectTest extends EntityManagerTest {
         order.setStatus(OrderStatus.WAITING);
         order.setTotal(new BigDecimal(250));
         order.setDeliveryAddress(deliveryAddress);
+        order.setClient(client);
 
         entityManager.getTransaction().begin();
         entityManager.persist(order);

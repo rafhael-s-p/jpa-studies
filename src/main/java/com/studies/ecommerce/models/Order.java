@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,14 +21,21 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items;
+
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
     @Column(name = "completion_date")
     private LocalDateTime completionDate;
 
-    @Column(name = "invoice_id")
-    private Integer invoiceId;
+    @OneToOne(mappedBy = "order")
+    private Invoice invoice;
 
     private BigDecimal total;
 
@@ -37,5 +45,8 @@ public class Order {
     @Embedded
     @Column(name = "delivery_address")
     private Address deliveryAddress;
+
+    @OneToOne(mappedBy = "order")
+    private CardPayment cardPayment;
 
 }

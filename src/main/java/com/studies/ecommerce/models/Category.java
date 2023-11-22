@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,6 +21,14 @@ public class Category {
 
     private String name;
 
-    @Column(name = "category_father_id")
-    private Integer categoryFatherId;
+    @ManyToOne
+    @JoinColumn(name = "category_father_id")
+    private Category categoryFather;
+
+    @OneToMany(mappedBy = "categoryFather")
+    private List<Category> categories;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Product> products;
+
 }
