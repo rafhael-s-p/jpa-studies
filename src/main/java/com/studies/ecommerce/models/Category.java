@@ -27,4 +27,8 @@ public class Category {
 
     @OneToMany(mappedBy = "categoryFather")
     private List<Category> categories;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Product> products;
+
 }
