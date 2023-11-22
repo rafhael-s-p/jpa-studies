@@ -34,8 +34,8 @@ public class Order {
     @Column(name = "completion_date")
     private LocalDateTime completionDate;
 
-    @Column(name = "invoice_id")
-    private Integer invoiceId;
+    @OneToOne(mappedBy = "order")
+    private Invoice invoice;
 
     private BigDecimal total;
 
@@ -45,5 +45,8 @@ public class Order {
     @Embedded
     @Column(name = "delivery_address")
     private Address deliveryAddress;
+
+    @OneToOne(mappedBy = "order")
+    private CardPayment cardPayment;
 
 }
