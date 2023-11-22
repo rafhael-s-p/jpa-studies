@@ -19,11 +19,8 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn(name = "order_id")
-//    @JoinTable(name = "tab_order_invoice",
-//        joinColumns = @JoinColumn(name = "invoice_id", unique = true),
-//        inverseJoinColumns = @JoinColumn(name = "order_id", unique = true))
     private Order order;
 
     private String xml;
