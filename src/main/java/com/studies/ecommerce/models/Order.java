@@ -1,5 +1,7 @@
 package com.studies.ecommerce.models;
 
+import com.studies.ecommerce.listener.GenericListener;
+import com.studies.ecommerce.listener.InvoiceGenerateListener;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EntityListeners({ InvoiceGenerateListener.class, GenericListener.class })
 @Entity
 @Table(name = "tab_order")
 public class Order {
@@ -52,6 +55,10 @@ public class Order {
     @OneToOne(mappedBy = "order")
     private CardPayment cardPayment;
 
+    public boolean isPaid() {
+        return OrderStatus.PAID.equals(status);
+    }
+
     public void calculateTotalPrice() {
         if (items != null)
             total = items.stream().map(OrderItem::getProductPrice)
@@ -72,27 +79,27 @@ public class Order {
 
     @PostPersist
     public void afterToPersist() {
-        System.out.println("After persisting Order.");
+        System.out.println("==> After persisting Order. ==> @PostPersist");
     }
 
     @PostUpdate
     public void afterToUpdate() {
-        System.out.println("After updating Order.");
+        System.out.println("==> After updating Order. ==> @PostUpdate");
     }
 
     @PreRemove
     public void whenToRemove() {
-        System.out.println("Before removing Order.");
+        System.out.println("==> Before removing Order. ==> @PreRemove");
     }
 
     @PostRemove
     public void afterToRemove() {
-        System.out.println("After removing Order.");
+        System.out.println("==> After removing Order. ==> @PostRemove");
     }
 
     @PostLoad
     public void whenToLoad() {
-        System.out.println("After loading the Order.");
+        System.out.println("==> After loading the Order. ==> @PostLoad");
     }
 
 }
