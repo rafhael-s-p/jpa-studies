@@ -52,4 +52,47 @@ public class Order {
     @OneToOne(mappedBy = "order")
     private CardPayment cardPayment;
 
+    public void calculateTotalPrice() {
+        if (items != null)
+            total = items.stream().map(OrderItem::getProductPrice)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @PrePersist
+    public void whenToPersist() {
+        createdAt = LocalDateTime.now();
+        calculateTotalPrice();
+    }
+
+    @PreUpdate
+    public void whenToUpdate() {
+        updatedAt = LocalDateTime.now();
+        calculateTotalPrice();
+    }
+
+    @PostPersist
+    public void afterToPersist() {
+        System.out.println("After persisting Order.");
+    }
+
+    @PostUpdate
+    public void afterToUpdate() {
+        System.out.println("After updating Order.");
+    }
+
+    @PreRemove
+    public void whenToRemove() {
+        System.out.println("Before removing Order.");
+    }
+
+    @PostRemove
+    public void afterToRemove() {
+        System.out.println("After removing Order.");
+    }
+
+    @PostLoad
+    public void whenToLoad() {
+        System.out.println("After loading the Order.");
+    }
+
 }
