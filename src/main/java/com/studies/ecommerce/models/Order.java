@@ -28,11 +28,14 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
 
-    @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "completion_date")
-    private LocalDateTime completionDate;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "confirmed_at")
+    private LocalDateTime confirmedAt;
 
     @OneToOne(mappedBy = "order")
     private Invoice invoice;
