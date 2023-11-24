@@ -29,7 +29,7 @@ public class EmbeddedObjectTest extends EntityManagerTest {
 
         Order order = new Order();
 
-        order.setOrderDate(LocalDateTime.now());
+        order.setCreatedAt(LocalDateTime.now());
         order.setStatus(OrderStatus.WAITING);
         order.setTotal(new BigDecimal(250));
         order.setDeliveryAddress(deliveryAddress);

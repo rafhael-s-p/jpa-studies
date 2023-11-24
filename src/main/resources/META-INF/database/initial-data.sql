@@ -4,7 +4,7 @@ insert into tab_product (id, name, price, description) values (3, 'GoPro Hero 7 
 insert into tab_client (id, name) values (1, 'Jenni Jacklyn');
 insert into tab_client (id, name) values (2, 'Georgie Esther');
 
-insert into tab_order (id, client_id, order_date, total, status) values (1, 1, sysdate(), 200.0, 'WAITING');
+insert into tab_order (id, client_id, created_at, total, status) values (1, 1, sysdate(), 200.0, 'WAITING');
 
 insert into tab_order_item (id, order_id, product_id, product_price, amount) values (1, 1, 1, 5.0, 2);
 
