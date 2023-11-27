@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -27,6 +28,12 @@ public class Product {
     private String description;
 
     private BigDecimal price;
+
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", insertable = false)
+    private LocalDateTime updatedAt;
 
     @ManyToMany
     @JoinTable(name = "tab_product_category",
