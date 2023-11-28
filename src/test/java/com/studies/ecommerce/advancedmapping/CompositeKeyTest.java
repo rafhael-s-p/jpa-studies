@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
-public class CompoundKeyTest extends EntityManagerTest {
+public class CompositeKeyTest extends EntityManagerTest {
 
     @Test
     public void saveItem() {
@@ -27,8 +27,7 @@ public class CompoundKeyTest extends EntityManagerTest {
         entityManager.flush();
 
         OrderItem orderItem = new OrderItem();
-        orderItem.setOrderId(order.getId());
-        orderItem.setProductId(product.getId());
+        orderItem.setId(new OrderItemId(order.getId(), product.getId()));
         orderItem.setOrder(order);
         orderItem.setProduct(product);
         orderItem.setProductPrice(product.getPrice());
