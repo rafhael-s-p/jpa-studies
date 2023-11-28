@@ -10,21 +10,27 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@IdClass(OrderItemId.class)
 @Entity
 @Table(name = "tab_order_item")
 public class OrderItem {
 
     @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "order_id")
+    private Integer orderId;
+
+    @EqualsAndHashCode.Include
+    @Id
+    @Column(name = "product_id")
+    private Integer productId;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private Order order;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
     @Column(name = "product_price")
