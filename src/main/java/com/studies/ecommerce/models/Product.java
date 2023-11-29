@@ -44,4 +44,10 @@ public class Product {
     @OneToOne(mappedBy = "product")
     private Warehouse warehouse;
 
+    @ElementCollection
+    @CollectionTable(name = "tab_tag_product",
+            joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "tag")
+    private List<String> tags;
+
 }
