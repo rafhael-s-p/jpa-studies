@@ -29,6 +29,9 @@ public class Product {
 
     private BigDecimal price;
 
+    @Lob
+    private byte[] productPhoto;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 

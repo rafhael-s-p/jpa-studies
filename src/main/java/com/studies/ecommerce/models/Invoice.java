@@ -24,7 +24,8 @@ public class Invoice {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private String xml;
+    @Lob
+    private byte[] xml;
 
     @Column(name = "emission_date")
     private Date emissionDate;
