@@ -45,9 +45,14 @@ public class Product {
     private Warehouse warehouse;
 
     @ElementCollection
-    @CollectionTable(name = "tab_tag_product",
+    @CollectionTable(name = "tab_product_tag",
             joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "tag")
     private List<String> tags;
+
+    @ElementCollection
+    @CollectionTable(name = "tab_product_characteristic",
+            joinColumns = @JoinColumn(name = "product_id"))
+    private List<ProductCharacteristic> characteristics;
 
 }
