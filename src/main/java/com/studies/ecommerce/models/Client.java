@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -20,6 +21,13 @@ public class Client {
     private Integer id;
 
     private String name;
+
+    @ElementCollection
+    @CollectionTable(name = "tab_client_contact",
+            joinColumns = @JoinColumn(name = "client_id"))
+    @MapKeyColumn(name = "type")
+    @Column(name = "description")
+    private Map<String, String> contacts;
 
     @Transient
     private String firstName;
