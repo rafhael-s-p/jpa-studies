@@ -6,13 +6,33 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
-public class CompositeKeyTest extends EntityManagerTest {
+public class MapsIdTest extends EntityManagerTest {
 
     @Test
-    public void saveItem() {
-        entityManager.getTransaction().begin();
+    public void paymentInsert() {
+        Order order = entityManager.find(Order.class, 1);
 
+        Invoice invoice = new Invoice();
+        invoice.setOrder(order);
+        invoice.setEmissionDate(new Date());
+        invoice.setXml("<xml></xml>");
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(invoice);
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Invoice checkInvoice = entityManager.find(Invoice.class, invoice.getId());
+
+        Assert.assertNotNull(checkInvoice);
+        Assert.assertEquals(order.getId(), checkInvoice.getId());
+    }
+
+    @Test
+    public void orderItemInsert() {
         Client client = entityManager.find(Client.class, 1);
         Product product = entityManager.find(Product.class, 1);
 
@@ -29,23 +49,16 @@ public class CompositeKeyTest extends EntityManagerTest {
         orderItem.setProductPrice(product.getPrice());
         orderItem.setAmount(1);
 
+        entityManager.getTransaction().begin();
         entityManager.persist(order);
         entityManager.persist(orderItem);
         entityManager.getTransaction().commit();
+
         entityManager.clear();
 
-        Order checkOrder = entityManager.find(Order.class, order.getId());
+        OrderItem checkOrderItem = entityManager.find(
+                OrderItem.class, new OrderItemId(order.getId(), product.getId()));
 
-        Assert.assertNotNull(checkOrder);
-        Assert.assertFalse(checkOrder.getItems().isEmpty());
-
-    }
-
-    @Test
-    public void findItem() {
-        OrderItem orderItem = entityManager.find(
-                OrderItem.class, new OrderItemId(1, 1));
-
-        Assert.assertNotNull(orderItem);
+        Assert.assertNotNull(checkOrderItem);
     }
 }

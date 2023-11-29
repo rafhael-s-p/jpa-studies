@@ -44,6 +44,7 @@ public class OneToManyRelationshipTest extends EntityManagerTest {
         order.setClient(client);
 
         OrderItem orderItem = new OrderItem();
+        orderItem.setId(new OrderItemId());
         orderItem.setProductPrice(product.getPrice());
         orderItem.setAmount(1);
         orderItem.setOrder(order);
