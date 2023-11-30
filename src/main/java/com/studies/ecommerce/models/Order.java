@@ -2,7 +2,6 @@ package com.studies.ecommerce.models;
 
 import com.studies.ecommerce.listener.GenericListener;
 import com.studies.ecommerce.listener.InvoiceGenerateListener;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,16 +12,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners({ InvoiceGenerateListener.class, GenericListener.class })
 @Entity
 @Table(name = "tab_order")
-public class Order {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Order extends BaseEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_id")

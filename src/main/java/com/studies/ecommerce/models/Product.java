@@ -1,7 +1,6 @@
 package com.studies.ecommerce.models;
 
 import com.studies.ecommerce.listener.GenericListener;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,16 +11,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners({ GenericListener.class })
 @Entity
 @Table(name = "tab_product")
-public class Product {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Product extends BaseEntity {
 
     private String name;
 

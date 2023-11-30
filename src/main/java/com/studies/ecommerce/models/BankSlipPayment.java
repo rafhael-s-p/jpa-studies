@@ -1,6 +1,5 @@
 package com.studies.ecommerce.models;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,15 +7,9 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tab_bank_slip_payment")
-public class BankSlipPayment {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class BankSlipPayment extends BaseEntity {
 
     @Column(name = "order_id")
     private Integer orderId;
@@ -25,4 +18,5 @@ public class BankSlipPayment {
     private PaymentStatus status;
 
     private String barCode;
+
 }
