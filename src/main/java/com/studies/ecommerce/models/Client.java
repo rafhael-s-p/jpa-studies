@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SecondaryTable(name = "tab_client_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"))
 @Entity
 @Table(name = "tab_client")
 public class Client {
@@ -32,14 +34,18 @@ public class Client {
     @Transient
     private String firstName;
 
+    @Column(table = "tab_client_detail")
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Column(table = "tab_client_detail")
+    private LocalDate birthday;
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
     @PostLoad
-    public void gettingFirstName(){
+    public void gettingFirstName() {
         if (name != null && !name.isBlank()) {
             int index = name.indexOf(" ");
             if (index > -1)
