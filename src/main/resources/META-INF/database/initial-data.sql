@@ -10,6 +10,6 @@ insert into tab_order (id, client_id, created_at, total, status) values (2, 1, s
 insert into tab_order_item (order_id, product_id, product_price, amount) values (1, 1, 499, 2);
 insert into tab_order_item (order_id, product_id, product_price, amount) values (2, 1, 499, 1);
 
-insert into tab_payment_card (order_id, status, card_number) values (2, 'PROCESSING', '5123716344050151');
+insert into tab_payment (order_id, status, payment_type, card_number, bar_code) values (2, 'PROCESSING', 'card', '5123716344050151', null);
 
 insert into tab_category (id, name) values (1, 'Electronics');
