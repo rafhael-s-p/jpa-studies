@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "tab_card_payment")
-public class CardPayment extends BaseEntity {
+@Table(name = "tab_payment")
+public abstract class Payment extends BaseEntity {
 
     @MapsId
     @OneToOne(optional = false)
@@ -18,7 +18,5 @@ public class CardPayment extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
-
-    private String number;
 
 }

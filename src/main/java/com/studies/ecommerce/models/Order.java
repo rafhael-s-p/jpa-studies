@@ -46,7 +46,7 @@ public class Order extends BaseEntity {
     private Address deliveryAddress;
 
     @OneToOne(mappedBy = "order")
-    private CardPayment cardPayment;
+    private Payment payment;
 
     public boolean isPaid() {
         return OrderStatus.PAID.equals(status);
