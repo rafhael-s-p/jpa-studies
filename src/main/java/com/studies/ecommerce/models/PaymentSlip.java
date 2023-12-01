@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Getter
 @Setter
+@DiscriminatorValue("slip")
 @Entity
-@Table(name = "tab_payment_slip")
+// @Table(name = "tab_payment_slip") This annotation is ignored for InheritanceType.SINGLE_TABLE
 public class PaymentSlip extends Payment {
 
     @Column(name = "bar_code")
