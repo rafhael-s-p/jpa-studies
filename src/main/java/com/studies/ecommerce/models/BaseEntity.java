@@ -4,25 +4,20 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity
-@Table(name = "tab_bank_slip_payment")
-public class BankSlipPayment {
+@MappedSuperclass
+public class BaseEntity {
 
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "order_id")
-    private Integer orderId;
-
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus status;
-
-    private String barCode;
 }

@@ -1,7 +1,7 @@
 package com.studies.ecommerce.relationship;
 
 import com.studies.ecommerce.EntityManagerTest;
-import com.studies.ecommerce.models.CardPayment;
+import com.studies.ecommerce.models.PaymentCard;
 import com.studies.ecommerce.models.Invoice;
 import com.studies.ecommerce.models.Order;
 import com.studies.ecommerce.models.PaymentStatus;
@@ -16,20 +16,20 @@ public class OneToOneRelationshipTest extends EntityManagerTest {
     public void checkOneToOneCardPaymentRelationship() {
         Order order = entityManager.find(Order.class, 1);
 
-        CardPayment cardPayment = new CardPayment();
-        cardPayment.setNumber("5123716344050150");
-        cardPayment.setStatus(PaymentStatus.PROCESSING);
-        cardPayment.setOrder(order);
+        PaymentCard paymentCard = new PaymentCard();
+        paymentCard.setCardNumber("5123716344050150");
+        paymentCard.setStatus(PaymentStatus.PROCESSING);
+        paymentCard.setOrder(order);
 
         entityManager.getTransaction().begin();
-        entityManager.persist(cardPayment);
+        entityManager.persist(paymentCard);
         entityManager.getTransaction().commit();
 
         entityManager.clear();
 
         Order checkOrder = entityManager.find(Order.class, order.getId());
 
-        Assert.assertNotNull(checkOrder.getCardPayment());
+        Assert.assertNotNull(checkOrder.getPayment());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class OneToOneRelationshipTest extends EntityManagerTest {
         Order order = entityManager.find(Order.class, 1);
 
         Invoice invoice = new Invoice();
-        invoice.setXml("<xml></xml>");
+        invoice.setXml("<xml></xml>".getBytes());
         invoice.setEmissionDate(new Date());
         invoice.setOrder(order);
 

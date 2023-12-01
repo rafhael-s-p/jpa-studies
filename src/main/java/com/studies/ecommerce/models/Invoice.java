@@ -1,6 +1,5 @@
 package com.studies.ecommerce.models;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,22 +8,19 @@ import java.util.Date;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tab_invoice")
-public class Invoice {
+public class Invoice extends BaseEntity {
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private String xml;
+    @Lob
+    private byte[] xml;
 
     @Column(name = "emission_date")
     private Date emissionDate;
+
 }

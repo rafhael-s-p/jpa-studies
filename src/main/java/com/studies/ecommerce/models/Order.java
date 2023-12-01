@@ -2,7 +2,6 @@ package com.studies.ecommerce.models;
 
 import com.studies.ecommerce.listener.GenericListener;
 import com.studies.ecommerce.listener.InvoiceGenerateListener;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,16 +12,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners({ InvoiceGenerateListener.class, GenericListener.class })
 @Entity
 @Table(name = "tab_order")
-public class Order {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Order extends BaseEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_id")
@@ -31,10 +24,10 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
 
     @Column(name = "confirmed_at")
@@ -53,7 +46,7 @@ public class Order {
     private Address deliveryAddress;
 
     @OneToOne(mappedBy = "order")
-    private CardPayment cardPayment;
+    private Payment payment;
 
     public boolean isPaid() {
         return OrderStatus.PAID.equals(status);

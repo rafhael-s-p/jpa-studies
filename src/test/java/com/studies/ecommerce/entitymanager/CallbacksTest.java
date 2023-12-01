@@ -10,7 +10,7 @@ import org.junit.Test;
 public class CallbacksTest extends EntityManagerTest {
 
     @Test
-    public void triggerCallback() {
+    public void callbackTrigger() {
         Client client = entityManager.find(Client.class, 1);
 
         Order order = new Order();

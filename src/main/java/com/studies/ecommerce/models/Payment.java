@@ -1,6 +1,5 @@
 package com.studies.ecommerce.models;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,16 +7,14 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@DiscriminatorColumn(name = "payment_type",
+        discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
-@Table(name = "tab_card_payment")
-public class CardPayment {
+@Table(name = "tab_payment")
+public abstract class Payment extends BaseEntity {
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "order_id")
     private Order order;
@@ -25,5 +22,4 @@ public class CardPayment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
-    private String number;
 }
