@@ -9,7 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "tab_category")
+@Table(name = "tab_category",
+        uniqueConstraints = { @UniqueConstraint(name = "unq_name", columnNames = { "name" }) },
+        indexes = { @Index(name = "idx_name", columnList = "name") })
 public class Category extends BaseEntity {
 
     private String name;

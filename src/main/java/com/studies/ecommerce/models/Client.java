@@ -12,10 +12,14 @@ import java.util.Map;
 @Setter
 @SecondaryTable(name = "tab_client_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"))
 @Entity
-@Table(name = "tab_client")
+@Table(name = "tab_client",
+        uniqueConstraints = { @UniqueConstraint(name = "unq_ssn", columnNames = { "ssn" }) },
+        indexes = { @Index(name = "idx_name", columnList = "name") })
 public class Client extends BaseEntity {
 
     private String name;
+
+    private String ssn;
 
     @ElementCollection
     @CollectionTable(name = "tab_client_contact",
