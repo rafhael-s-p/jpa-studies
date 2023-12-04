@@ -17,10 +17,11 @@ public class Invoice extends BaseEntity {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @Column(nullable = false)
     @Lob
     private byte[] xml;
 
-    @Column(name = "emission_date")
+    @Column(name = "emission_date", nullable = false)
     private Date emissionDate;
 
 }

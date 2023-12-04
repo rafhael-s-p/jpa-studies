@@ -18,16 +18,19 @@ import java.util.List;
         indexes = { @Index(name = "idx_name", columnList = "name") })
 public class Product extends BaseEntity {
 
+    @Column(length = 100, nullable = false) // default length 255
     private String name;
 
+    @Column(columnDefinition = "varchar(300) not null default 'Some Description'")
     private String description;
 
+    @Column(precision = 18, scale = 2) // Default precision, scale is 19, 2
     private BigDecimal price;
 
     @Lob
     private byte[] productPhoto;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", insertable = false)
