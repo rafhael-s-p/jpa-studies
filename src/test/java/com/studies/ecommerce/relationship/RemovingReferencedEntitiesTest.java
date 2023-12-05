@@ -17,11 +17,11 @@ public class RemovingReferencedEntitiesTest extends EntityManagerTest {
         order.getItems().forEach(i -> entityManager.remove(i));
         entityManager.remove(order);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Order checkOrder = entityManager.find(Order.class, 1);
 
         Assert.assertNull(checkOrder);
     }
+
 }

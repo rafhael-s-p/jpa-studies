@@ -1,9 +1,9 @@
 package com.studies.ecommerce.relationship;
 
 import com.studies.ecommerce.EntityManagerTest;
-import com.studies.ecommerce.models.PaymentCard;
 import com.studies.ecommerce.models.Invoice;
 import com.studies.ecommerce.models.Order;
+import com.studies.ecommerce.models.PaymentCard;
 import com.studies.ecommerce.models.PaymentStatus;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,6 @@ public class OneToOneRelationshipTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(paymentCard);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Order checkOrder = entityManager.find(Order.class, order.getId());
@@ -44,11 +43,11 @@ public class OneToOneRelationshipTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(invoice);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Order checkOrder = entityManager.find(Order.class, order.getId());
 
         Assert.assertNotNull(checkOrder.getInvoice());
     }
+
 }

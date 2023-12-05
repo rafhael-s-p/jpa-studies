@@ -48,4 +48,5 @@ public class CompositeKeyTest extends EntityManagerTest {
 
         Assert.assertNotNull(orderItem);
     }
+
 }

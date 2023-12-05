@@ -17,7 +17,6 @@ public class PrimaryKeyStrategyTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(category);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Category checkCategory = entityManager.find(Category.class, category.getId());
@@ -34,7 +33,6 @@ public class PrimaryKeyStrategyTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(category);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Category checkCategory = entityManager.find(Category.class, category.getId());
@@ -51,7 +49,6 @@ public class PrimaryKeyStrategyTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(category);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Category checkCategory = entityManager.find(Category.class, category.getId());
@@ -62,12 +59,11 @@ public class PrimaryKeyStrategyTest extends EntityManagerTest {
     @Test
     public void identityGeneratorStrategy() {
         Category category = new Category();
-        category.setName("Electronics");
+        category.setName("Sports");
 
         entityManager.getTransaction().begin();
         entityManager.persist(category);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Category checkCategory = entityManager.find(Category.class, category.getId());

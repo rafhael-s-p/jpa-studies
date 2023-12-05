@@ -24,7 +24,6 @@ public class SavingFilesTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(invoice);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Invoice checkInvoice = entityManager.find(Invoice.class, invoice.getId());

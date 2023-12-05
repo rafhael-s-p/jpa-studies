@@ -54,11 +54,11 @@ public class OneToManyRelationshipTest extends EntityManagerTest {
         entityManager.persist(order);
         entityManager.persist(orderItem);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Order checkOrder = entityManager.find(Order.class, order.getId());
 
         Assert.assertFalse(checkOrder.getItems().isEmpty());
     }
+
 }
