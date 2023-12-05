@@ -25,7 +25,8 @@ public class Client extends BaseEntity {
 
     @ElementCollection
     @CollectionTable(name = "tab_client_contact",
-            joinColumns = @JoinColumn(name = "client_id"))
+            joinColumns = @JoinColumn(name = "client_id", nullable = false,
+                    foreignKey = @ForeignKey(name = "fk_client_contact_client")))
     @MapKeyColumn(name = "type")
     @Column(name = "description")
     private Map<String, String> contacts;

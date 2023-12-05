@@ -18,7 +18,8 @@ import java.util.List;
 public class Order extends BaseEntity {
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_order_client"))
     private Client client;
 
     @OneToMany(mappedBy = "order")

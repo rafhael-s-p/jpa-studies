@@ -16,7 +16,8 @@ public abstract class Payment extends BaseEntity {
 
     @MapsId
     @OneToOne(optional = false)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_payment_order"))
     private Order order;
 
     @Column(length = 30, nullable = false)
