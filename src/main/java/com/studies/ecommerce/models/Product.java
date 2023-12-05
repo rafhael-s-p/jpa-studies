@@ -21,7 +21,7 @@ public class Product extends BaseEntity {
     @Column(length = 100, nullable = false) // default length 255
     private String name;
 
-    @Column(columnDefinition = "varchar(300) default 'Some Description'")
+    @Lob
     private String description;
 
     @Column(precision = 18, scale = 2) // Default precision, scale is 19, 2
