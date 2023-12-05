@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 @Entity
 public class PaymentCard extends Payment {
 
-    @Column(name = "card_number", length = 50, nullable = false)
+    @Column(name = "card_number", length = 50)
     private String cardNumber;
 
 }

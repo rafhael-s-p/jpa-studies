@@ -27,7 +27,7 @@ public class Address {
     @Column(length = 50)
     private String city;
 
-    @Column(length = 2)
+    @Column(length = 20)
     private String state;
 
 }
