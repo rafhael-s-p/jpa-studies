@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class ProductOperationsTest extends EntityManagerTest {
 
@@ -16,11 +17,11 @@ public class ProductOperationsTest extends EntityManagerTest {
         product.setName("Canon Camera");
         product.setDescription("The best definition for your photos.");
         product.setPrice(new BigDecimal(5000));
+        product.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         entityManager.persist(product);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Product checkProduct = entityManager.find(Product.class, product.getId());
@@ -35,11 +36,11 @@ public class ProductOperationsTest extends EntityManagerTest {
         product.setName("Rode Videomic Microphone");
         product.setDescription("The best sound quality.");
         product.setPrice(new BigDecimal(1000));
+        product.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         Product savedProduct = entityManager.merge(product);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Product checkProduct = entityManager.find(Product.class, savedProduct.getId());
@@ -55,11 +56,11 @@ public class ProductOperationsTest extends EntityManagerTest {
         product.setName("Kindle Paperwhite");
         product.setDescription("Meet the new Kindle.");
         product.setPrice(new BigDecimal(599));
+        product.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         entityManager.merge(product);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Product checkProduct = entityManager.find(Product.class, product.getId());
@@ -104,12 +105,12 @@ public class ProductOperationsTest extends EntityManagerTest {
         productPersist.setName("One Plus Smartphone");
         productPersist.setDescription("The fastest processor.");
         productPersist.setPrice(new BigDecimal(2000));
+        productPersist.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         entityManager.persist(productPersist);
         productPersist.setName("One Plus Deluxe Smartphone");
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Product checkProductPersist = entityManager.find(Product.class, productPersist.getId());
@@ -118,16 +119,15 @@ public class ProductOperationsTest extends EntityManagerTest {
 
         // MERGE
         Product productMerge = new Product();
-
         productMerge.setName("Dell Laptop");
         productMerge.setDescription("The best in the category.");
         productMerge.setPrice(new BigDecimal(2000));
+        productMerge.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         productMerge = entityManager.merge(productMerge);
         productMerge.setName("Dell Laptop Deluxe");
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Product checkProductMerge = entityManager.find(Product.class, productMerge.getId());

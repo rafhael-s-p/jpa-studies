@@ -10,16 +10,25 @@ import java.util.Map;
 
 @Getter
 @Setter
-@SecondaryTable(name = "tab_client_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"))
+@SecondaryTable(name = "tab_client_detail",
+        pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"),
+        foreignKey = @ForeignKey(name = "fk_client_detail_client"))
 @Entity
-@Table(name = "tab_client")
+@Table(name = "tab_client",
+        uniqueConstraints = { @UniqueConstraint(name = "unq_ssn", columnNames = { "ssn" }) },
+        indexes = { @Index(name = "idx_client_name", columnList = "name") })
 public class Client extends BaseEntity {
 
+    @Column(length = 100, nullable = false)
     private String name;
+
+    @Column(length = 11, nullable = false)
+    private String ssn;
 
     @ElementCollection
     @CollectionTable(name = "tab_client_contact",
-            joinColumns = @JoinColumn(name = "client_id"))
+            joinColumns = @JoinColumn(name = "client_id", nullable = false,
+                    foreignKey = @ForeignKey(name = "fk_client_contact_client")))
     @MapKeyColumn(name = "type")
     @Column(name = "description")
     private Map<String, String> contacts;

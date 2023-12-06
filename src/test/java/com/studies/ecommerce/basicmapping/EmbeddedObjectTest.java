@@ -28,7 +28,6 @@ public class EmbeddedObjectTest extends EntityManagerTest {
         deliveryAddress.setState("California");
 
         Order order = new Order();
-
         order.setCreatedAt(LocalDateTime.now());
         order.setStatus(OrderStatus.WAITING);
         order.setTotal(new BigDecimal(250));
@@ -38,7 +37,6 @@ public class EmbeddedObjectTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(order);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Order checkOrder = entityManager.find(Order.class, order.getId());
@@ -47,4 +45,5 @@ public class EmbeddedObjectTest extends EntityManagerTest {
         Assert.assertNotNull(checkOrder.getDeliveryAddress());
         Assert.assertNotNull(checkOrder.getDeliveryAddress().getPostal());
     }
+
 }

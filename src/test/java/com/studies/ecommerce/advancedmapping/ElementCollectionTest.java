@@ -20,7 +20,6 @@ public class ElementCollectionTest extends EntityManagerTest {
         product.setTags(Arrays.asList("ebook", "digital-book"));
 
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Product checkProduct = entityManager.find(Product.class, product.getId());
@@ -37,7 +36,6 @@ public class ElementCollectionTest extends EntityManagerTest {
                 new ProductCharacteristic("color", "black")));
 
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Product checkProduct = entityManager.find(Product.class, product.getId());
@@ -53,7 +51,6 @@ public class ElementCollectionTest extends EntityManagerTest {
         client.setContacts(Collections.singletonMap("email", "name@domain.com"));
 
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Client checkClient = entityManager.find(Client.class, client.getId());

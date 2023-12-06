@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 @Entity
 public class PaymentSlip extends Payment {
 
-    @Column(name = "bar_code")
+    @Column(name = "bar_code", length = 100)
     private String barCode;
 
 }

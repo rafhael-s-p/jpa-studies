@@ -18,13 +18,14 @@ import java.util.List;
 public class Order extends BaseEntity {
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_order_client"))
     private Client client;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", insertable = false)
@@ -36,8 +37,10 @@ public class Order extends BaseEntity {
     @OneToOne(mappedBy = "order")
     private Invoice invoice;
 
+    @Column(precision = 18, scale = 2, nullable = false)
     private BigDecimal total;
 
+    @Column(length = 30, nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 

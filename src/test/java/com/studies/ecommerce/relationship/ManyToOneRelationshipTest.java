@@ -18,13 +18,11 @@ public class ManyToOneRelationshipTest extends EntityManagerTest {
         order.setStatus(OrderStatus.WAITING);
         order.setCreatedAt(LocalDateTime.now());
         order.setTotal(BigDecimal.TEN);
-
         order.setClient(client);
 
         entityManager.getTransaction().begin();
         entityManager.persist(order);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Order checkOrder = entityManager.find(Order.class, order.getId());
@@ -62,4 +60,5 @@ public class ManyToOneRelationshipTest extends EntityManagerTest {
         Assert.assertNotNull(checkOrderItem.getOrder());
         Assert.assertNotNull(checkOrderItem.getProduct());
     }
+
 }

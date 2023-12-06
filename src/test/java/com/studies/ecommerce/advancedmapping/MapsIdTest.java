@@ -22,7 +22,6 @@ public class MapsIdTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(invoice);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Invoice checkInvoice = entityManager.find(Invoice.class, invoice.getId());
@@ -53,7 +52,6 @@ public class MapsIdTest extends EntityManagerTest {
         entityManager.persist(order);
         entityManager.persist(orderItem);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         OrderItem checkOrderItem = entityManager.find(
@@ -61,4 +59,5 @@ public class MapsIdTest extends EntityManagerTest {
 
         Assert.assertNotNull(checkOrderItem);
     }
+
 }

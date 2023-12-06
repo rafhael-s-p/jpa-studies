@@ -13,4 +13,5 @@ public class TransientPropertiesTest extends EntityManagerTest {
 
         Assert.assertEquals("Jenni", client.getFirstName());
     }
+
 }

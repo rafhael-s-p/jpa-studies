@@ -13,11 +13,12 @@ public class InheritanceTest extends EntityManagerTest {
     public void saveClient() {
         Client client = new Client();
         client.setName("Mary Jane");
+        client.setGender(Gender.FEMALE);
+        client.setSsn("426042848");
 
         entityManager.getTransaction().begin();
         entityManager.persist(client);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Client checkClient = entityManager.find(Client.class, client.getId());
@@ -46,7 +47,6 @@ public class InheritanceTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(paymentCard);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Order checkOrder = entityManager.find(Order.class, order.getId());

@@ -19,11 +19,11 @@ public class ManyToManyRelationshipTest extends EntityManagerTest {
         // category.setProducts(Arrays.asList(product)); // it does not work because product is the relationship owner
         product.setCategories(Arrays.asList(category));
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Category checkCategory = entityManager.find(Category.class, category.getId());
 
         Assert.assertFalse(checkCategory.getProducts().isEmpty());
     }
+
 }
