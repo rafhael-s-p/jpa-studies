@@ -10,7 +10,9 @@ import java.util.Map;
 
 @Getter
 @Setter
-@SecondaryTable(name = "tab_client_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"))
+@SecondaryTable(name = "tab_client_detail",
+        pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"),
+        foreignKey = @ForeignKey(name = "fk_client_detail_client"))
 @Entity
 @Table(name = "tab_client",
         uniqueConstraints = { @UniqueConstraint(name = "unq_ssn", columnNames = { "ssn" }) },
