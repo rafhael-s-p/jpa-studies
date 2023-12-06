@@ -16,7 +16,7 @@ import java.util.Map;
 @Entity
 @Table(name = "tab_client",
         uniqueConstraints = { @UniqueConstraint(name = "unq_ssn", columnNames = { "ssn" }) },
-        indexes = { @Index(name = "idx_name", columnList = "name") })
+        indexes = { @Index(name = "idx_client_name", columnList = "name") })
 public class Client extends BaseEntity {
 
     @Column(length = 100, nullable = false)

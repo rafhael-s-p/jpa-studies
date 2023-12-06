@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "tab_category",
         uniqueConstraints = { @UniqueConstraint(name = "unq_name", columnNames = { "name" }) },
-        indexes = { @Index(name = "idx_name", columnList = "name") })
+        indexes = { @Index(name = "idx_category_name", columnList = "name") })
 public class Category extends BaseEntity {
 
     @Column(length = 100, nullable = false)
