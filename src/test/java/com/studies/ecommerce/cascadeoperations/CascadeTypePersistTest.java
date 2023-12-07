@@ -58,7 +58,7 @@ public class CascadeTypePersistTest extends EntityManagerTest {
         orderItem.setProduct(product);
         orderItem.setAmount(1);
         orderItem.setProductPrice(product.getPrice());
-        order.setItems(Arrays.asList(orderItem)); // it must assign CascadeType.PERSIST in order items attribute
+        order.setItems(Arrays.asList(orderItem)); // it must assign CascadeType.PERSIST on order items attribute
 
         entityManager.getTransaction().begin();
         entityManager.persist(order);
@@ -82,7 +82,7 @@ public class CascadeTypePersistTest extends EntityManagerTest {
 
         Order order = new Order();
         order.setCreatedAt(LocalDateTime.now());
-        order.setClient(client); // it must assign CascadeType.PERSIST in client attribute
+        order.setClient(client); // it must assign CascadeType.PERSIST on client attribute
         order.setTotal(BigDecimal.ZERO);
         order.setStatus(OrderStatus.WAITING);
 
