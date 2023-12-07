@@ -4,9 +4,27 @@ import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Order;
 import com.studies.ecommerce.models.OrderItem;
 import com.studies.ecommerce.models.OrderItemId;
+import com.studies.ecommerce.models.Product;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class CascadeTypeRemoveTest extends EntityManagerTest {
+
+    @Test
+    public void removeProductCategoryRelation() {
+        Product product = entityManager.find(Product.class, 1);
+
+        Assert.assertFalse(product.getCategories().isEmpty());
+
+        entityManager.getTransaction().begin();
+        product.getCategories().clear();
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+
+        Product checkProduct = entityManager.find(Product.class, product.getId());
+
+        Assert.assertTrue(checkProduct.getCategories().isEmpty());
+    }
 
     // @Test
     public void removeOrderAndItems() {
