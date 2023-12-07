@@ -27,6 +27,23 @@ public class CascadeTypeRemoveTest extends EntityManagerTest {
     }
 
     // @Test
+    public void removeOrphanItems() {
+        Order order = entityManager.find(Order.class, 1);
+
+        Assert.assertFalse(order.getItems().isEmpty());
+
+        entityManager.getTransaction().begin();
+        // order.getItems().remove(0); // it must assign CascadeType.PERSIST and orphanRemoval on items attribute
+        order.getItems().clear(); // it must assign CascadeType.REMOVE or orphanRemoval on items attribute
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+
+        Order checkOrder = entityManager.find(Order.class, order.getId());
+
+        Assert.assertTrue(checkOrder.getItems().isEmpty());
+    }
+
+    // @Test
     public void removeOrderAndItems() {
         Order order = entityManager.find(Order.class, 1);
 
