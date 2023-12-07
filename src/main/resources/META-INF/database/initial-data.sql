@@ -16,3 +16,6 @@ insert into tab_order_item (order_id, product_id, product_price, amount) values 
 insert into tab_payment (order_id, status, payment_type, card_number, bar_code) values (2, 'PROCESSING', 'card', '5123716344050151', null);
 
 insert into tab_category (id, name) values (1, 'Electronics');
+insert into tab_category (id, name) values (2, 'Books');
+
+insert into tab_product_category (product_id, category_id) values (1, 2);
