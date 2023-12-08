@@ -47,4 +47,16 @@ public class JPQLBasicTest extends EntityManagerTest {
         Assert.assertEquals(Client.class, clientsList.get(0).getClass());
     }
 
+    @Test
+    public void resultProjection() {
+        String jpql = "select id, name from Product";
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        List<Object[]> list = typedQuery.getResultList();
+
+        Assert.assertEquals(2, list.get(0).length);
+
+        list.forEach(arr -> System.out.println(arr[0] + ", " + arr[1]));
+    }
+
 }
