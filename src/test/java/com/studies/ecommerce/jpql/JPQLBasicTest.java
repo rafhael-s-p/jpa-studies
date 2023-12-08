@@ -1,6 +1,7 @@
 package com.studies.ecommerce.jpql;
 
 import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.models.Client;
 import com.studies.ecommerce.models.Order;
 import org.junit.Assert;
@@ -57,6 +58,17 @@ public class JPQLBasicTest extends EntityManagerTest {
         Assert.assertEquals(2, list.get(0).length);
 
         list.forEach(arr -> System.out.println(arr[0] + ", " + arr[1]));
+    }
+
+    @Test
+    public void dtoProjection() {
+        String jpql = "select new com.studies.ecommerce.dto.ProductDTO(id, name) from Product";
+
+        TypedQuery<ProductDTO> typedQuery = entityManager.createQuery(jpql, ProductDTO.class);
+        List<ProductDTO> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(p -> System.out.println(p.getId() + ", " + p.getName()));
     }
 
 }
