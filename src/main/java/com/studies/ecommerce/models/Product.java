@@ -28,6 +28,7 @@ public class Product extends BaseEntity {
     private BigDecimal price;
 
     @Lob
+    @Column(name = "product_photo")
     private byte[] productPhoto;
 
     @Column(name = "created_at", updatable = false, nullable = false)

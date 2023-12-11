@@ -6,7 +6,7 @@
 --create table tab_order (id integer not null auto_increment, confirmed_at datetime(6), created_at datetime(6) not null, city varchar(50), complement varchar(50), district varchar(50), number varchar(10), postal varchar(9), state varchar(20), street varchar(100), status varchar(30) not null, total decimal(18,2) not null, updated_at datetime(6), client_id integer not null, primary key (id)) engine=InnoDB;
 --create table tab_order_item (order_id integer not null, product_id integer not null, amount integer not null, product_price decimal(19,2), primary key (order_id, product_id)) engine=InnoDB;
 --create table tab_payment (payment_type varchar(31) not null, order_id integer not null, status varchar(30) not null, bar_code varchar(100), card_number varchar(50), primary key (order_id)) engine=InnoDB;
---create table tab_product (id integer not null auto_increment, created_at datetime(6) not null, description longtext, name varchar(100) not null, price decimal(18,2), productPhoto longblob, updated_at datetime(6), primary key (id)) engine=InnoDB;
+--create table tab_product (id integer not null auto_increment, created_at datetime(6) not null, description longtext, name varchar(100) not null, price decimal(18,2), product_photo longblob, updated_at datetime(6), primary key (id)) engine=InnoDB;
 --create table tab_product_category (product_id integer not null, category_id integer not null) engine=InnoDB;
 --create table tab_product_characteristic (product_id integer not null, name varchar(100) not null, value varchar(255)) engine=InnoDB;
 --create table tab_product_tag (product_id integer not null, tag varchar(255)) engine=InnoDB;
