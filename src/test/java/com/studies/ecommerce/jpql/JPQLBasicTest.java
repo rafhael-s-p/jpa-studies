@@ -14,6 +14,18 @@ import java.util.List;
 public class JPQLBasicTest extends EntityManagerTest {
 
     @Test
+    public void resultSort() {
+        String jpql = "select c from Client c order by c.name asc";
+
+        TypedQuery<Client> typedQuery = entityManager.createQuery(jpql, Client.class);
+
+        List<Client> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(c -> System.out.println(c.getId() + ", " + c.getName()));
+    }
+
+    @Test
     public void findById() {
         TypedQuery<Order> typedQuery = entityManager
                 .createQuery("select o from Order o where o.id = 1", Order.class);
