@@ -1,13 +1,41 @@
 package com.studies.ecommerce.jpql;
 
 import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.models.Order;
+import com.studies.ecommerce.models.Product;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ConditionalExpressionsTest extends EntityManagerTest {
+
+    @Test
+    public void conditionalExpressionGreaterAndLessWithDate() {
+        String jpql = "select o from Order o where o.createdAt > :date";
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(jpql, Order.class);
+        typedQuery.setParameter("date", LocalDateTime.now().minusDays(2));
+
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
+
+    @Test
+    public void conditionalExpressionGreaterAndLess() {
+        String jpql = "select p from Product p " +
+                " where p.price >= :initialPrice and p.price <= :finalPrice";
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(jpql, Product.class);
+        typedQuery.setParameter("initialPrice", new BigDecimal(399));
+        typedQuery.setParameter("finalPrice", new BigDecimal(1499));
+
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
 
     @Test
     public void conditionalExpressionIsNull() {
