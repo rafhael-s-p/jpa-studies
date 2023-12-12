@@ -14,6 +14,16 @@ import java.util.List;
 public class ConditionalExpressionsTest extends EntityManagerTest {
 
     @Test
+    public void conditionalExpressionNotEqual() {
+        String jpql = "select p from Product p where p.price <> 99";
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(jpql, Product.class);
+
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
+
+    @Test
     public void conditionalExpressionBetween() {
         String jpql = "select o from Order o " +
                 " where o.createdAt between :initialDate and :finalDate";
