@@ -14,6 +14,19 @@ import java.util.List;
 public class ConditionalExpressionsTest extends EntityManagerTest {
 
     @Test
+    public void conditionalExpressionBetween() {
+        String jpql = "select o from Order o " +
+                " where o.createdAt between :initialDate and :finalDate";
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(jpql, Order.class);
+        typedQuery.setParameter("initialDate", LocalDateTime.now().minusDays(10));
+        typedQuery.setParameter("finalDate", LocalDateTime.now());
+
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
+
+    @Test
     public void conditionalExpressionGreaterAndLessWithDate() {
         String jpql = "select o from Order o where o.createdAt > :date";
 
