@@ -18,7 +18,12 @@ insert into tab_payment (order_id, status, payment_type, card_number, bar_code) 
 
 insert into tab_invoice (order_id, xml, emission_date) values (2, '<xml><xml/>', sysdate());
 
-insert into tab_category (id, name) values (1, 'Electronics');
-insert into tab_category (id, name) values (2, 'Books');
+insert into tab_category (name) values ('Electronics');
+insert into tab_category (name) values ('Books');
+insert into tab_category (name) values ('Sports');
+insert into tab_category (name) values ('Soccer');
+insert into tab_category (name) values ('Swimming');
+insert into tab_category (name) values ('Laptops');
+insert into tab_category (name) values ('Smartphones');
 
 insert into tab_product_category (product_id, category_id) values (1, 2);
