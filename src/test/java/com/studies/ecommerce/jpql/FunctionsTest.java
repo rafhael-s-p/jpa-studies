@@ -10,6 +10,19 @@ import java.util.List;
 public class FunctionsTest extends EntityManagerTest {
 
     @Test
+    public void nativeFunction() {
+        String jpql = "select function('dayname', o.createdAt) from Order o " +
+                " where function('average_above_revenue', o.total) = 1";
+
+        TypedQuery<String> typedQuery = entityManager.createQuery(jpql, String.class);
+
+        List<String> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(System.out::println);
+    }
+
+    @Test
     public void collectionFunction() {
         String jpql = "select size(o.items) from Order o where size(o.items) > 1";
 
