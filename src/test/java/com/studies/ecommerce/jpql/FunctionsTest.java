@@ -10,6 +10,18 @@ import java.util.List;
 public class FunctionsTest extends EntityManagerTest {
 
     @Test
+    public void collectionFunction() {
+        String jpql = "select size(o.items) from Order o where size(o.items) > 1";
+
+        TypedQuery<Integer> typedQuery = entityManager.createQuery(jpql, Integer.class);
+
+        List<Integer> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(size -> System.out.println(size));
+    }
+
+    @Test
     public void numericFunction() {
         String jpql = "select abs(o.total), mod(o.id, 2), sqrt(o.total) from Order o " +
                 " where abs(o.total) > 1000";
