@@ -31,7 +31,7 @@ public class FunctionsTest extends EntityManagerTest {
         List<Integer> list = typedQuery.getResultList();
         Assert.assertFalse(list.isEmpty());
 
-        list.forEach(size -> System.out.println(size));
+        list.forEach(System.out::println);
     }
 
     @Test
