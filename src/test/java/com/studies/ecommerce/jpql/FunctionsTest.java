@@ -10,6 +10,19 @@ import java.util.List;
 public class FunctionsTest extends EntityManagerTest {
 
     @Test
+    public void numericFunction() {
+        String jpql = "select abs(o.total), mod(o.id, 2), sqrt(o.total) from Order o " +
+                " where abs(o.total) > 1000";
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+
+        List<Object[]> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(arr -> System.out.println(arr[0] + " | " + arr[1] + " | " + arr[2]));
+    }
+
+    @Test
     public void dateFunction() {
         // TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         // current_date, current_time, current_timestamp
