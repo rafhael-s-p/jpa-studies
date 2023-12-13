@@ -1,3 +1,5 @@
+create function average_above_revenue(average_value double) returns boolean reads sql data return average_value > (select avg(total) from tab_order);
+
 --create table tab_category (id integer not null auto_increment, name varchar(100) not null, category_father_id integer, primary key (id)) engine=InnoDB;
 --create table tab_client (id integer not null auto_increment, name varchar(100) not null, ssn varchar(11) not null, primary key (id)) engine=InnoDB;
 --create table tab_client_contact (client_id integer not null, description varchar(255), type varchar(255) not null, primary key (client_id, type)) engine=InnoDB;
