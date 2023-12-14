@@ -10,6 +10,20 @@ import java.util.List;
 public class FunctionsTest extends EntityManagerTest {
 
     @Test
+    public void aggregationFunction() {
+        // avg, count, min, max, sum
+
+        String jpql = "select sum(o.total) from Order o";
+
+        TypedQuery<Number> typedQuery = entityManager.createQuery(jpql, Number.class);
+
+        List<Number> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(System.out::println);
+    }
+
+    @Test
     public void nativeFunction() {
         String jpql = "select function('dayname', o.createdAt) from Order o " +
                 " where function('average_above_revenue', o.total) = 1";
