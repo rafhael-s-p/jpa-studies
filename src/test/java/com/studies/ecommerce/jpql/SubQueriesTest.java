@@ -13,6 +13,20 @@ import java.util.List;
 public class SubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void subQueriesWithIn() {
+        String jpql = "select o from Order o where o.id in " +
+                " (select o2.id from OrderItem oi " +
+                "      join oi.order o2 join oi.product p where p.price > 100)";
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(jpql, Order.class);
+
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+
+    @Test
     public void subQueries() {
         String goodClients2JPQL = "select c from Client c where " +
                 " 500 < (select sum(o.total) from Order o where o.client = c)";
