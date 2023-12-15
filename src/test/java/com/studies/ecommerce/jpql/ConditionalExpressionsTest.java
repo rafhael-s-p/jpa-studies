@@ -1,6 +1,7 @@
 package com.studies.ecommerce.jpql;
 
 import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.models.Client;
 import com.studies.ecommerce.models.Order;
 import com.studies.ecommerce.models.Product;
 import org.junit.Assert;
@@ -9,9 +10,29 @@ import org.junit.Test;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 public class ConditionalExpressionsTest extends EntityManagerTest {
+
+    @Test
+    public void conditionalExpressionIn() {
+        Client client1 = new Client();
+        client1.setId(1);
+
+        Client client2 = new Client();
+        client2.setId(2);
+
+        List<Client> clients = Arrays.asList(client1, client2);
+
+        String jpql = "select o from Order o where o.client in (:clients)";
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(jpql, Order.class);
+        typedQuery.setParameter("clients", clients);
+
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
 
     @Test
     public void conditionalExpressionCase() {
