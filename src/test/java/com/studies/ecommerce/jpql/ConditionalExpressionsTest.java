@@ -14,6 +14,24 @@ import java.util.List;
 public class ConditionalExpressionsTest extends EntityManagerTest {
 
     @Test
+    public void conditionalExpressionCase() {
+        String jpql = "select o.id, " +
+                " case type(o.payment) " +
+                "       when PaymentSlip then 'Order paid by slip' " +
+                "       when PaymentCard then 'Order paid by card' " +
+                "       else 'Order not paid yet.' " +
+                " end " +
+                " from Order o";
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+
+        List<Object[]> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+
+        lista.forEach(arr -> System.out.println(arr[0] + ", " + arr[1]));
+    }
+
+    @Test
     public void conditionalExpressionNotEqual() {
         String jpql = "select p from Product p where p.price <> 99";
 
@@ -73,8 +91,8 @@ public class ConditionalExpressionsTest extends EntityManagerTest {
 
     @Test
     public void conditionalExpressionIsEmpty() {
-        String jpql = "select p from Product p where p.categories is empty";
-        // String jpql = "select p from Product p where p.categories is not empty";
+        // String jpql = "select p from Product p where p.categories is empty";
+        String jpql = "select p from Product p where p.categories is not empty";
 
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
 
