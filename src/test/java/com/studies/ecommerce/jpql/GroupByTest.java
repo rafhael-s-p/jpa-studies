@@ -10,6 +10,23 @@ import java.util.List;
 public class GroupByTest extends EntityManagerTest {
 
     @Test
+    public void groupingWithHaving() {
+
+        String totalSalesAmongCategoriesThatSellTheMostJPQL = "select c.name, sum(oi.productPrice) from OrderItem oi " +
+                " join oi.product p join p.categories c " +
+                " group by c.id " +
+                " having avg(oi.productPrice) > 1500 ";
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(totalSalesAmongCategoriesThatSellTheMostJPQL, Object[].class);
+
+        List<Object[]> list = typedQuery.getResultList();
+
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(arr -> System.out.println(arr[0] + ", " + arr[1]));
+    }
+
+    @Test
     public void groupAndFilterResult() {
         String totalSalesByMonthJPQL = "select concat(year(o.createdAt), '/', function('monthname', o.createdAt)), sum(o.total) " +
                 " from Order o " +
