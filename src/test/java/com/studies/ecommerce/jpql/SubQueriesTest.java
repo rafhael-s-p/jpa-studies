@@ -13,6 +13,19 @@ import java.util.List;
 public class SubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void subQueriesWithExists() {
+        String jpql = "select p from Product p where exists " +
+                " (select 1 from OrderItem oi join oi.product p2 where p2 = p)";
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(jpql, Product.class);
+
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+
+    @Test
     public void subQueriesWithIn() {
         String jpql = "select o from Order o where o.id in " +
                 " (select o2.id from OrderItem oi " +
