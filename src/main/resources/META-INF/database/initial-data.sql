@@ -20,6 +20,9 @@ insert into tab_order_item (order_id, product_id, product_price, amount) values 
 insert into tab_order_item (order_id, product_id, product_price, amount) values (4, 1, 499, 1);
 
 insert into tab_payment (order_id, status, payment_type, card_number, bar_code) values (2, 'PROCESSING', 'card', '5123716344050151', null);
+insert into tab_payment (order_id, status, payment_type, card_number, bar_code) values (3, 'RECEIVED', 'card', '5123716344050152', null);
+insert into tab_payment (order_id, status, payment_type, card_number, bar_code) values (4, 'RECEIVED', 'slip', null, '5123716344050153');
+insert into tab_payment (order_id, status, payment_type, card_number, bar_code) values (5, 'PROCESSING', 'card', '5123716344050151', null);
 
 insert into tab_invoice (order_id, xml, emission_date) values (2, '<xml><xml/>', sysdate());
 
