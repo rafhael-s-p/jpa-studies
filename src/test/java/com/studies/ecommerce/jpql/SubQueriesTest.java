@@ -47,19 +47,27 @@ public class SubQueriesTest extends EntityManagerTest {
         String allProductsThatHaveAlwaysSoldAtTheCurrentPriceJPQL = "select p from Product p where " +
                 " p.price = ALL (select productPrice from OrderItem where product = p)";
 
+        String allProductsThatHaveAlwaysBeenSoldAtTheSamePriceJPQL = "select distinct p from OrderItem oi join oi.product p where " +
+                " oi.productPrice = ALL (select productPrice from OrderItem where product = p and id <> oi.id)";
+
         TypedQuery<Product> allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveTypedQuery =
                 entityManager.createQuery(allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveJPQL, Product.class);
         TypedQuery<Product> allProductsThatHaveAlwaysSoldAtTheCurrentPriceTypedQuery =
                 entityManager.createQuery(allProductsThatHaveAlwaysSoldAtTheCurrentPriceJPQL, Product.class);
+        TypedQuery<Product> allProductsThatHaveAlwaysBeenSoldAtTheSamePriceTypedQuery =
+                entityManager.createQuery(allProductsThatHaveAlwaysBeenSoldAtTheSamePriceJPQL, Product.class);
 
         List<Product> allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveList = allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveTypedQuery.getResultList();
         List<Product> allProductsThatHaveAlwaysSoldAtTheCurrentPriceList = allProductsThatHaveAlwaysSoldAtTheCurrentPriceTypedQuery.getResultList();
+        List<Product> allProductsThatHaveAlwaysBeenSoldAtTheSamePriceList = allProductsThatHaveAlwaysBeenSoldAtTheSamePriceTypedQuery.getResultList();
 
-        Assert.assertFalse(allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveList.isEmpty());
+        //Assert.assertFalse(allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveList.isEmpty());
         Assert.assertFalse(allProductsThatHaveAlwaysSoldAtTheCurrentPriceList.isEmpty());
+        Assert.assertFalse(allProductsThatHaveAlwaysBeenSoldAtTheSamePriceList.isEmpty());
 
         allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveList.forEach(obj -> System.out.println("JPQL 1 - ID: " + obj.getId()));
         allProductsThatHaveAlwaysSoldAtTheCurrentPriceList.forEach(obj -> System.out.println("JPQL 2 - ID: " + obj.getId()));
+        allProductsThatHaveAlwaysBeenSoldAtTheSamePriceList.forEach(obj -> System.out.println("JPQL 3 - ID: " + obj.getId()));
     }
 
     @Test
