@@ -13,6 +13,32 @@ import java.util.List;
 public class SubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void subQueriesWithAny() {
+
+        String allProductsThatHaveAlreadyBeenSoldAtADifferentPriceThanTheCurrentOneJPQL = "select p from Product p " +
+                " where p.price <> ANY (select productPrice from OrderItem where product = p)";
+
+        String allProductsThatHaveAlreadyBeenSoldAtLeastOnceAtTheCurrentPriceJPQL = "select p from Product p " +
+                " where p.price = ANY (select productPrice from OrderItem where product = p)";
+
+        TypedQuery<Product> allProductsThatHaveAlreadyBeenSoldAtADifferentPriceThanTheCurrentOneTypedQuery
+                = entityManager.createQuery(allProductsThatHaveAlreadyBeenSoldAtADifferentPriceThanTheCurrentOneJPQL, Product.class);
+        TypedQuery<Product> allProductsThatHaveAlreadyBeenSoldAtLeastOnceAtTheCurrentPriceTypedQuery
+                = entityManager.createQuery(allProductsThatHaveAlreadyBeenSoldAtLeastOnceAtTheCurrentPriceJPQL, Product.class);
+
+        List<Product> allProductsThatHaveAlreadyBeenSoldAtADifferentPriceThanTheCurrentOneList =
+                allProductsThatHaveAlreadyBeenSoldAtADifferentPriceThanTheCurrentOneTypedQuery.getResultList();
+        List<Product> allProductsThatHaveAlreadyBeenSoldAtLeastOnceAtTheCurrentPriceList =
+                allProductsThatHaveAlreadyBeenSoldAtLeastOnceAtTheCurrentPriceTypedQuery.getResultList();
+
+        Assert.assertFalse(allProductsThatHaveAlreadyBeenSoldAtADifferentPriceThanTheCurrentOneList.isEmpty());
+        Assert.assertFalse(allProductsThatHaveAlreadyBeenSoldAtLeastOnceAtTheCurrentPriceList.isEmpty());
+
+        allProductsThatHaveAlreadyBeenSoldAtADifferentPriceThanTheCurrentOneList.forEach(obj -> System.out.println("JPQL 1 - ID: " + obj.getId()));
+        allProductsThatHaveAlreadyBeenSoldAtLeastOnceAtTheCurrentPriceList.forEach(obj -> System.out.println("JPQL 2 - ID: " + obj.getId()));
+    }
+
+    @Test
     public void subQueriesWithAll() {
 
         String allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveJPQL = "select p from Product p where " +
