@@ -13,6 +13,30 @@ import java.util.List;
 public class SubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void subQueriesWithAll() {
+
+        String allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveJPQL = "select p from Product p where " +
+                " p.price > ALL (select productPrice from OrderItem where product = p)";
+
+        String allProductsThatHaveAlwaysSoldAtTheCurrentPriceJPQL = "select p from Product p where " +
+                " p.price = ALL (select productPrice from OrderItem where product = p)";
+
+        TypedQuery<Product> allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveTypedQuery =
+                entityManager.createQuery(allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveJPQL, Product.class);
+        TypedQuery<Product> allProductsThatHaveAlwaysSoldAtTheCurrentPriceTypedQuery =
+                entityManager.createQuery(allProductsThatHaveAlwaysSoldAtTheCurrentPriceJPQL, Product.class);
+
+        List<Product> allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveList = allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveTypedQuery.getResultList();
+        List<Product> allProductsThatHaveAlwaysSoldAtTheCurrentPriceList = allProductsThatHaveAlwaysSoldAtTheCurrentPriceTypedQuery.getResultList();
+
+        Assert.assertFalse(allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveList.isEmpty());
+        Assert.assertFalse(allProductsThatHaveAlwaysSoldAtTheCurrentPriceList.isEmpty());
+
+        allProductsWereNoLongerSoldAfterTheyBecameMoreExpensiveList.forEach(obj -> System.out.println("JPQL 1 - ID: " + obj.getId()));
+        allProductsThatHaveAlwaysSoldAtTheCurrentPriceList.forEach(obj -> System.out.println("JPQL 2 - ID: " + obj.getId()));
+    }
+
+    @Test
     public void subQueriesWithExists() {
         String jpql = "select p from Product p where exists " +
                 " (select 1 from OrderItem oi join oi.product p2 where p2 = p)";
