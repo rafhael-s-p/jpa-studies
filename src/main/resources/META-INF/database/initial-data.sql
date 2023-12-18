@@ -8,16 +8,18 @@ insert into tab_client (id, name, ssn) values (2, 'Georgie Esther', "040468979")
 insert into tab_client_detail (client_id, gender, birthday) values (1, 'FEMALE', date_sub(sysdate(), interval 31 year));
 insert into tab_client_detail (client_id, gender, birthday) values (2, 'FEMALE', date_sub(sysdate(), interval 31 year));
 
-insert into tab_order (id, client_id, created_at, total, status) values (1, 1, date_sub(sysdate(), interval 5 day), 2398.0, 'WAITING');
-insert into tab_order (id, client_id, created_at, total, status) values (2, 1, sysdate(), 499.0, 'WAITING');
+insert into tab_order (id, client_id, created_at, total, status) values (1, 1, date_sub(sysdate(), interval 32 day), 2398.0, 'WAITING');
+insert into tab_order (id, client_id, created_at, total, status) values (2, 1, date_sub(sysdate(), interval 5 day), 499.0, 'WAITING');
 insert into tab_order (id, client_id, created_at, total, status) values (3, 1, date_sub(sysdate(), interval 4 day), 3500.0, 'PAID');
 insert into tab_order (id, client_id, created_at, total, status) values (4, 2, date_sub(sysdate(), interval 2 day), 499.0, 'PAID');
+insert into tab_order (id, client_id, created_at, total, status) values (5, 1, date_sub(sysdate(), interval 2 day), 799.0, 'PAID');
 
 insert into tab_order_item (order_id, product_id, product_price, amount) values (1, 1, 499, 2);
 insert into tab_order_item (order_id, product_id, product_price, amount) values (1, 3, 1400, 1);
 insert into tab_order_item (order_id, product_id, product_price, amount) values (2, 1, 499, 1);
 insert into tab_order_item (order_id, product_id, product_price, amount) values (3, 4, 3500, 1);
 insert into tab_order_item (order_id, product_id, product_price, amount) values (4, 1, 499, 1);
+insert into tab_order_item (order_id, product_id, product_price, amount) values (5, 1, 799, 1);
 
 insert into tab_payment (order_id, status, payment_type, card_number, bar_code) values (2, 'PROCESSING', 'card', '5123716344050151', null);
 insert into tab_payment (order_id, status, payment_type, card_number, bar_code) values (3, 'RECEIVED', 'card', '5123716344050152', null);
