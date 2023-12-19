@@ -11,6 +11,10 @@ import java.util.List;
 
 @Getter
 @Setter
+@NamedQueries({
+        @NamedQuery(name = "Product.list", query = "select p from Product p"),
+        @NamedQuery(name = "Product.listByCategory", query = "select p from Product p where exists (select 1 from Category c2 join c2.products p2 where p2 = p and c2.id = :category)")
+})
 @EntityListeners({ GenericListener.class })
 @Entity
 @Table(name = "tab_product",
@@ -28,6 +32,7 @@ public class Product extends BaseEntity {
     private BigDecimal price;
 
     @Lob
+    @Column(name = "product_photo")
     private byte[] productPhoto;
 
     @Column(name = "created_at", updatable = false, nullable = false)
