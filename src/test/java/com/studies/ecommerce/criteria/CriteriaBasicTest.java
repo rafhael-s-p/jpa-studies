@@ -1,6 +1,7 @@
 package com.studies.ecommerce.criteria;
 
 import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.models.Order;
 import com.studies.ecommerce.models.Product;
 import org.junit.Assert;
@@ -15,6 +16,22 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class CriteriaBasicTest extends EntityManagerTest {
+
+    @Test
+    public void returnDTOProjection() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ProductDTO> criteriaQuery = criteriaBuilder.createQuery(ProductDTO.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(criteriaBuilder
+                .construct(ProductDTO.class, root.get("id"), root.get("name")));
+
+        TypedQuery<ProductDTO> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<ProductDTO> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(dto -> System.out.println("ID: " + dto.getId() + ", Name: " + dto.getName()));
+    }
 
     @Test
     public void returnTupleProjection() {
