@@ -2,6 +2,7 @@ package com.studies.ecommerce.criteria;
 
 import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Order;
+import com.studies.ecommerce.models.Product;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,8 +10,38 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
+import java.util.List;
 
 public class CriteriaBasicTest extends EntityManagerTest {
+
+    @Test
+    public void returnAllProducts() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
+
+    @Test
+    public void returnAttribute() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<BigDecimal> criteriaQuery = criteriaBuilder.createQuery(BigDecimal.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.select(root.get("total"));
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1));
+
+        TypedQuery<BigDecimal> typedQuery = entityManager.createQuery(criteriaQuery);
+        BigDecimal total = typedQuery.getSingleResult();
+        Assert.assertEquals(new BigDecimal("2398.00"), total);
+    }
 
     @Test
     public void findById() {
