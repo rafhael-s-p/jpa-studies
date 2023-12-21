@@ -14,6 +14,26 @@ import java.util.List;
 public class CriteriaJoinTest extends EntityManagerTest {
 
     @Test
+    public void joinFetch() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        root.fetch("invoice", JoinType.LEFT);
+        root.fetch("payment", JoinType.LEFT);
+        root.fetch("client");
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1));
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        Order order = typedQuery.getSingleResult();
+        Assert.assertNotNull(order);
+    }
+
+    @Test
     public void leftOuterJoin() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
