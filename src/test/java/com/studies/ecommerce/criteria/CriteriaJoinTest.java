@@ -2,8 +2,7 @@ package com.studies.ecommerce.criteria;
 
 import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Order;
-import com.studies.ecommerce.models.Payment;
-import com.studies.ecommerce.models.PaymentStatus;
+import com.studies.ecommerce.models.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,6 +11,26 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 public class CriteriaJoinTest extends EntityManagerTest {
+
+    @Test
+    public void ordersWithSpecificProduct() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+        Join<OrderItem, Product> joinOrderItemProduct = root
+                .join("items")
+                .join("product");
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(criteriaBuilder.equal(
+                joinOrderItemProduct.get("id"), 1));
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
 
     @Test
     public void joinFetch() {
