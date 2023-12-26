@@ -12,9 +12,32 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ConditionalExpressionsCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void conditionalExpressionCriteriaGreaterAndLess() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(
+                criteriaBuilder.greaterThanOrEqualTo(
+                        root.get(Product_.price), new BigDecimal(799)),
+                criteriaBuilder.lessThanOrEqualTo(
+                        root.get(Product_.price), new BigDecimal(3500)));
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(p -> System.out.println(
+                "ID: " + p.getId() + ", Name: " + p.getName() + ", Price: " + p.getPrice()));
+    }
 
     @Test
     public void conditionalExpressionCriteriaIsEmpty() {
