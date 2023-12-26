@@ -3,6 +3,8 @@ package com.studies.ecommerce.criteria;
 import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Client;
 import com.studies.ecommerce.models.Client_;
+import com.studies.ecommerce.models.Product;
+import com.studies.ecommerce.models.Product_;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,6 +15,37 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class ConditionalExpressionsCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void conditionalExpressionCriteriaIsEmpty() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(criteriaBuilder.isEmpty(root.get(Product_.categories)));
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertTrue(list.isEmpty());
+    }
+
+    @Test
+    public void conditionalExpressionCriteriaIsNull() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(criteriaBuilder.isNull(root.get(Product_.productPhoto)));
+        //criteriaQuery.where(root.get(Product_.productPhoto).isNull());
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
 
     @Test
     public void conditionalExpressionCriteriaLike() {
