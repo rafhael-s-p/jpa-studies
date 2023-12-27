@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class LogicalOperatorsCriteriaTest extends EntityManagerTest {
+public class CriteriaLogicalOperatorsTest extends EntityManagerTest {
 
     @Test
     public void logicalOperators() {
