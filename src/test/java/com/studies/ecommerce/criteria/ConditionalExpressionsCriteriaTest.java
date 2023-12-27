@@ -16,6 +16,24 @@ import java.util.List;
 public class ConditionalExpressionsCriteriaTest extends EntityManagerTest {
 
     @Test
+    public void conditionalExpressionCriteriaNotEqual() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(criteriaBuilder.notEqual(
+                root.get(Order_.total), new BigDecimal(499)));
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(p -> System.out.println("ID: " + p.getId() + ", Total: " + p.getTotal()));
+    }
+
+    @Test
     public void conditionalExpressionCriteriaBetween() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
