@@ -2,6 +2,8 @@ package com.studies.ecommerce.criteria;
 
 import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.dto.ProductDTO;
+import com.studies.ecommerce.models.Client;
+import com.studies.ecommerce.models.Client_;
 import com.studies.ecommerce.models.Order;
 import com.studies.ecommerce.models.Product;
 import org.junit.Assert;
@@ -16,6 +18,23 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class CriteriaBasicTest extends EntityManagerTest {
+
+    @Test
+    public void resultSort() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
+        Root<Client> root = criteriaQuery.from(Client.class);
+
+        criteriaQuery.orderBy(criteriaBuilder.desc(root.get(Client_.name)));
+        //criteriaQuery.orderBy(criteriaBuilder.asc(root.get(Client_.name)));
+
+        TypedQuery<Client> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Client> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(c -> System.out.println(c.getId() + ", " + c.getName()));
+    }
 
     @Test
     public void returnDTOProjection() {
