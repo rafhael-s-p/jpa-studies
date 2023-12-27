@@ -16,6 +16,26 @@ import java.util.List;
 public class ConditionalExpressionsCriteriaTest extends EntityManagerTest {
 
     @Test
+    public void conditionalExpressionCriteriaBetween() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(criteriaBuilder.between(
+                root.get(Order_.createdAt),
+                LocalDateTime.now().minusDays(5).withSecond(0).withMinute(0).withHour(0),
+                LocalDateTime.now()));
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(p -> System.out.println("ID: " + p.getId() + ", Total: " + p.getTotal()));
+    }
+
+    @Test
     public void conditionalExpressionCriteriaGreaterAndLessWithDate() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
@@ -50,8 +70,7 @@ public class ConditionalExpressionsCriteriaTest extends EntityManagerTest {
         List<Product> list = typedQuery.getResultList();
         Assert.assertFalse(list.isEmpty());
 
-        list.forEach(p -> System.out.println(
-                "ID: " + p.getId() + ", Name: " + p.getName() + ", Price: " + p.getPrice()));
+        list.forEach(p -> System.out.println("ID: " + p.getId() + ", Name: " + p.getName() + ", Price: " + p.getPrice()));
     }
 
     @Test
