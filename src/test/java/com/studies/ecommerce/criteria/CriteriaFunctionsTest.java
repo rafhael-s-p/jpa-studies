@@ -15,6 +15,34 @@ import java.util.List;
 public class CriteriaFunctionsTest extends EntityManagerTest {
 
     @Test
+    public void applyNumericFunctions() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.multiselect(
+                root.get(Order_.id),
+                criteriaBuilder.abs(criteriaBuilder.prod(root.get(Order_.id), -1)),
+                criteriaBuilder.mod(root.get(Order_.id), 2),
+                criteriaBuilder.sqrt(root.get(Order_.total))
+        );
+
+        criteriaQuery.where(criteriaBuilder.greaterThan(
+                criteriaBuilder.sqrt(root.get(Order_.total)), 10.0));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Object[]> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(arr -> System.out.println(
+                arr[0]
+                        + ", abs: " + arr[1]
+                        + ", mod: " + arr[2]
+                        + ", sqrt: " + arr[3]));
+    }
+
+    @Test
     public void applyDateFunctions() {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
