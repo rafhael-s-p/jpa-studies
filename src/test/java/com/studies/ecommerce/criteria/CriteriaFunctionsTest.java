@@ -15,6 +15,28 @@ import java.util.List;
 public class CriteriaFunctionsTest extends EntityManagerTest {
 
     @Test
+    public void applyNativeFunctions() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.multiselect(
+                root.get(Order_.id),
+                criteriaBuilder.function("dayname", String.class, root.get(Order_.createdAt))
+        );
+
+        criteriaQuery.where(criteriaBuilder.isTrue(
+                criteriaBuilder.function("average_above_revenue", Boolean.class, root.get(Order_.total))));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Object[]> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(arr -> System.out.println(arr[0] + ", dayname: " + arr[1]));
+    }
+
+    @Test
     public void applyCollectionFunctions() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
