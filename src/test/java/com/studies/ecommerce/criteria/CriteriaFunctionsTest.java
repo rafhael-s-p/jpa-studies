@@ -15,6 +15,33 @@ import java.util.List;
 public class CriteriaFunctionsTest extends EntityManagerTest {
 
     @Test
+    public void applyAggregationFunctions() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.multiselect(
+                criteriaBuilder.count(root.get(Order_.id)),
+                criteriaBuilder.avg(root.get(Order_.total)),
+                criteriaBuilder.sum(root.get(Order_.total)),
+                criteriaBuilder.min(root.get(Order_.total)),
+                criteriaBuilder.max(root.get(Order_.total))
+        );
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Object[]> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(arr -> System.out.println(
+                "count: " + arr[0]
+                        + ", avg: " + arr[1]
+                        + ", sum: " + arr[2]
+                        + ", min: " + arr[3]
+                        + ", max: " + arr[4]));
+    }
+
+    @Test
     public void applyNativeFunctions() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
