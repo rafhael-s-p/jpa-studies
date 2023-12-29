@@ -1,0 +1,80 @@
+package com.studies.ecommerce.criteria;
+
+import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.models.Order;
+import com.studies.ecommerce.models.*;
+import org.junit.Test;
+
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+import java.util.List;
+
+public class CriteriaGroupByTest extends EntityManagerTest {
+
+    @Test
+    public void totalSalesByClient() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<OrderItem> root = criteriaQuery.from(OrderItem.class);
+        Join<OrderItem, Order> joinOrder = root.join(OrderItem_.order);
+        Join<Order, Client> joinOrderClient = joinOrder.join(Order_.client);
+
+        criteriaQuery.multiselect(
+                joinOrderClient.get(Client_.name),
+                criteriaBuilder.sum(root.get(OrderItem_.productPrice))
+        );
+
+        criteriaQuery.groupBy(joinOrderClient.get(Client_.id));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+
+        list.forEach(arr -> System.out.println("Client Name: " + arr[0] + ", Sum: " + arr[1]));
+    }
+
+    @Test
+    public void totalSalesByCategory() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<OrderItem> root = criteriaQuery.from(OrderItem.class);
+        Join<OrderItem, Product> joinProduct = root.join(OrderItem_.product);
+        Join<Product, Category> joinProductCategory = joinProduct.join(Product_.categories);
+
+        criteriaQuery.multiselect(
+                joinProductCategory.get(Category_.name),
+                criteriaBuilder.sum(root.get(OrderItem_.productPrice))
+        );
+
+        criteriaQuery.groupBy(joinProductCategory.get(Category_.id));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+
+        list.forEach(arr -> System.out.println("Category Name: " + arr[0] + ", Sum: " + arr[1]));
+
+    }
+
+    @Test
+    public void productAmountByCategory() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Category> root = criteriaQuery.from(Category.class);
+        Join<Category, Product> joinProduto = root.join(Category_.products, JoinType.LEFT);
+
+        criteriaQuery.multiselect(
+                root.get(Category_.name),
+                criteriaBuilder.count(joinProduto.get(Product_.id))
+        );
+
+        criteriaQuery.groupBy(root.get(Category_.id));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+
+        list.forEach(arr -> System.out.println("Name: " + arr[0] + ", Count: " + arr[1]));
+    }
+
+}
