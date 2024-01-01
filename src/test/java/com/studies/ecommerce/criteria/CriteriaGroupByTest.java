@@ -7,9 +7,39 @@ import org.junit.Test;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CriteriaGroupByTest extends EntityManagerTest {
+
+    @Test
+    public void totalSalesAmongTheCategoriesThatSellTheMost() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<OrderItem> root = criteriaQuery.from(OrderItem.class);
+        Join<OrderItem, Product> joinProduct = root.join(OrderItem_.product);
+        Join<Product, Category> joinProductCategory = joinProduct.join(Product_.categories);
+
+        criteriaQuery.multiselect(
+                joinProductCategory.get(Category_.name),
+                criteriaBuilder.sum(root.get(OrderItem_.productPrice)),
+                criteriaBuilder.avg(root.get(OrderItem_.productPrice))
+        );
+
+        criteriaQuery.groupBy(joinProductCategory.get(Category_.id));
+
+        criteriaQuery.having(criteriaBuilder.greaterThan(
+                criteriaBuilder.avg(root.get(OrderItem_.productPrice)).as(BigDecimal.class), new BigDecimal(700)));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+
+        list.forEach(arr -> System.out.println(
+                "Category Name: " + arr[0]
+                        + ", SUM: " + arr[1]
+                        + ", AVG: " + arr[2]));
+    }
 
     @Test
     public void totalSalesByMonth() {
