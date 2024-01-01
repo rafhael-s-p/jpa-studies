@@ -12,6 +12,35 @@ import java.util.List;
 public class CriteriaGroupByTest extends EntityManagerTest {
 
     @Test
+    public void totalSalesByMonth() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        Expression<Integer> yearOfOrderCreation = criteriaBuilder
+                .function("year", Integer.class, root.get(Order_.createdAt));
+        Expression<Integer> monthOfOrderCreation = criteriaBuilder
+                .function("month", Integer.class, root.get(Order_.createdAt));
+        Expression<String> monthNameOfOrderCreation = criteriaBuilder
+                .function("monthname", String.class, root.get(Order_.createdAt));
+
+        Expression<String> yearMonthConcat = criteriaBuilder.concat(
+                criteriaBuilder.concat(yearOfOrderCreation.as(String.class), "/"),
+                monthNameOfOrderCreation
+        );
+
+        criteriaQuery.multiselect(yearMonthConcat, criteriaBuilder.sum(root.get(Order_.total)));
+
+        criteriaQuery.groupBy(yearOfOrderCreation, monthOfOrderCreation);
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+
+        list.forEach(arr -> System.out.println("Year/Month: " + arr[0] + ", Sum: " + arr[1]));
+    }
+
+    @Test
     public void totalSalesByClient() {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
