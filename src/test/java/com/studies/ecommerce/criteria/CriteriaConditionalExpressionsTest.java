@@ -16,6 +16,27 @@ import java.util.List;
 public class CriteriaConditionalExpressionsTest extends EntityManagerTest {
 
     @Test
+    public void conditionalExpressionCriteriaCase() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.multiselect(
+                root.get(Order_.id),
+                criteriaBuilder.selectCase(root.get(Order_.STATUS))
+                        .when(OrderStatus.PAID.toString(), "It was paid")
+                        .when(OrderStatus.WAITING.toString(), "It is waiting")
+                        .otherwise(root.get(Order_.status)));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Object[]> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(arr -> System.out.println(arr[0] + ", " + arr[1]));
+    }
+
+    @Test
     public void conditionalExpressionCriteriaNotEqual() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
