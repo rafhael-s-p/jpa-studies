@@ -2,10 +2,7 @@ package com.studies.ecommerce.criteria;
 
 import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.dto.ProductDTO;
-import com.studies.ecommerce.models.Client;
-import com.studies.ecommerce.models.Client_;
-import com.studies.ecommerce.models.Order;
-import com.studies.ecommerce.models.Product;
+import com.studies.ecommerce.models.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,6 +15,22 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class CriteriaBasicTest extends EntityManagerTest {
+
+    @Test
+    public void distinct() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+        root.join(Order_.items);
+
+        criteriaQuery.select(root);
+        criteriaQuery.distinct(true);
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Order> list = typedQuery.getResultList();
+
+        list.forEach(p -> System.out.println("ID: " + p.getId()));
+    }
 
     @Test
     public void resultSort() {
