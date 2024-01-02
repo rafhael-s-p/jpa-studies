@@ -1,19 +1,43 @@
 package com.studies.ecommerce.criteria;
 
 import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.models.Order;
 import com.studies.ecommerce.models.*;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
+import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 public class CriteriaSubQueriesTest extends EntityManagerTest {
+
+    @Test
+    public void productWithPriceGreaterThan100() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Integer> subquery = criteriaQuery.subquery(Integer.class);
+        Root<OrderItem> subqueryRoot = subquery.from(OrderItem.class);
+        Join<OrderItem, Order> subQueryJoinOrder = subqueryRoot.join(OrderItem_.order);
+        Join<OrderItem, Product> subQueryJoinProduct = subqueryRoot.join(OrderItem_.product);
+        subquery.select(subQueryJoinOrder.get(Order_.id));
+        subquery.where(criteriaBuilder.greaterThan(subQueryJoinProduct.get(Product_.price), new BigDecimal(100)));
+
+        criteriaQuery.where(root.get(Order_.id).in(subquery));
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
 
     @Test
     public void clientsThatBoughtMoreThan1300() {
