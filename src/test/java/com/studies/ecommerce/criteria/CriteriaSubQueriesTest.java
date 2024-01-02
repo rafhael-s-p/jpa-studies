@@ -1,10 +1,7 @@
 package com.studies.ecommerce.criteria;
 
 import com.studies.ecommerce.EntityManagerTest;
-import com.studies.ecommerce.models.Order;
-import com.studies.ecommerce.models.Order_;
-import com.studies.ecommerce.models.Product;
-import com.studies.ecommerce.models.Product_;
+import com.studies.ecommerce.models.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,6 +14,30 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class CriteriaSubQueriesTest extends EntityManagerTest {
+
+    @Test
+    public void clientsThatBoughtMoreThan1300() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
+        Root<Client> root = criteriaQuery.from(Client.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<BigDecimal> subquery = criteriaQuery.subquery(BigDecimal.class);
+        Root<Order> subqueryRoot = subquery.from(Order.class);
+        subquery.select(criteriaBuilder.sum(subqueryRoot.get(Order_.total)));
+        subquery.where(criteriaBuilder.equal(root, subqueryRoot.get(Order_.client)));
+
+        criteriaQuery.where(criteriaBuilder.greaterThan(subquery, new BigDecimal(1300)));
+
+        TypedQuery<Client> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Client> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId() + ", Name: " + obj.getName()));
+    }
 
     @Test
     public void allOrdersAboveAverageSales() {
