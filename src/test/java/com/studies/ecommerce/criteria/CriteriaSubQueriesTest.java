@@ -14,6 +14,30 @@ import java.util.List;
 public class CriteriaSubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void allProductsThatHaveAlreadyBeenSold() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Integer> subquery = criteriaQuery.subquery(Integer.class);
+        Root<OrderItem> subqueryRoot = subquery.from(OrderItem.class);
+        subquery.select(criteriaBuilder.literal(1));
+        subquery.where(criteriaBuilder.equal(subqueryRoot.get(OrderItem_.product), root));
+
+        criteriaQuery.where(criteriaBuilder.exists(subquery));
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+
+    @Test
     public void productWithPriceGreaterThan100() {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
