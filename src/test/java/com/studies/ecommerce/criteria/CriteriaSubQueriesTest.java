@@ -14,6 +14,32 @@ import java.util.List;
 public class CriteriaSubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void allProductsThatHaveAlreadyBeenSoldAtAPriceDifferentFromTheCurrentPrice() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Integer> subquery = criteriaQuery.subquery(Integer.class);
+        Root<OrderItem> subqueryRoot = subquery.from(OrderItem.class);
+        subquery.select(criteriaBuilder.literal(1));
+        subquery.where(
+                criteriaBuilder.equal(subqueryRoot.get(OrderItem_.product), root),
+                criteriaBuilder.notEqual(subqueryRoot.get(OrderItem_.productPrice), root.get(Product_.price))
+        );
+
+        criteriaQuery.where(criteriaBuilder.exists(subquery));
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+
+    @Test
     public void allOrdersThatHaveAProductWithId2() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
