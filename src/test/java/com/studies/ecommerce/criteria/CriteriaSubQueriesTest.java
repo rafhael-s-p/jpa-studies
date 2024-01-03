@@ -14,6 +14,31 @@ import java.util.List;
 public class CriteriaSubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void allOrdersThatHaveAProductWithId2() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Integer> subquery = criteriaQuery.subquery(Integer.class);
+        Root<OrderItem> subqueryRoot = subquery.from(OrderItem.class);
+        Join<OrderItem, Product> subQueryJoinProduct = subqueryRoot.join(OrderItem_.product);
+        Join<Product, Category> subQueryJoinProductCategories = subQueryJoinProduct.join(Product_.categories);
+        subquery.select(subqueryRoot.get(OrderItem_.id).get(OrderItemId_.orderId));
+        subquery.where(criteriaBuilder.equal(subQueryJoinProductCategories.get(Category_.id), 2));
+
+        criteriaQuery.where(root.get(Order_.id).in(subquery));
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+
+    @Test
     public void allClientsWhoPlacedMoreThanTwoOrders() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
