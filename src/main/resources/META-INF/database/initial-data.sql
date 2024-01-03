@@ -1,5 +1,5 @@
 insert into tab_product (id, name, price, created_at, description) values (1, 'Kindle', 799.0, date_sub(sysdate(), interval 1 day), 'Meet the new Kindle, now with adjustable built-in lighting, which allows you to read indoors or outdoors, at any time of the day.');
-insert into tab_product (id, name, price, created_at, description) values (3, 'GoPro Hero 7 Camera', 1400.0, date_sub(sysdate(), interval 1 day), '2x better performance.');
+insert into tab_product (id, name, price, created_at, description) values (3, 'GoPro Hero 7 Camera', 1500.0, date_sub(sysdate(), interval 1 day), '2x better performance.');
 insert into tab_product (id, name, price, created_at, description) values (4, 'Canon 80D Camera', 3500.0, sysdate(), 'The best focus adjustment.');
 insert into tab_product (id, name, price, created_at, description) values (5, 'Lapel microphone', 80.0, sysdate(), 'Good sound capture.');
 
