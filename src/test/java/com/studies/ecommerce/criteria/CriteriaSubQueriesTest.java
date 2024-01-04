@@ -14,6 +14,34 @@ import java.util.List;
 public class CriteriaSubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void allProductsThatHaveAlwaysBeenSoldAtTheSamePrice() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<OrderItem> root = criteriaQuery.from(OrderItem.class);
+
+        criteriaQuery.select(root.get(OrderItem_.product));
+        criteriaQuery.distinct(true);
+
+        Subquery<BigDecimal> subquery = criteriaQuery.subquery(BigDecimal.class);
+        Root<OrderItem> subqueryRoot = subquery.from(OrderItem.class);
+        subquery.select(subqueryRoot.get(OrderItem_.productPrice));
+        subquery.where(
+                criteriaBuilder.equal(subqueryRoot.get(OrderItem_.product), root.get(OrderItem_.product)),
+                criteriaBuilder.notEqual(subqueryRoot, root)
+        );
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get(OrderItem_.productPrice), criteriaBuilder.all(subquery)));
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Product> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+
+    @Test
     public void allProductsThatHaveAlreadyBeenSoldAtADifferentPriceThanTheCurrentOne() {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
