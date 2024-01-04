@@ -14,6 +14,24 @@ import java.math.BigDecimal;
 public class CriteriaBatchOperationsTest extends EntityManagerTest {
 
     public static final Integer BOOKS_CATEGORY = 2;
+    public static final Integer DELETE_ID_START = 5;
+    public static final Integer DELETE_ID_END = 12;
+
+    @Test
+    public void criteriaBatchDelete() {
+        entityManager.getTransaction().begin();
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Product> criteriaDelete = criteriaBuilder.createCriteriaDelete(Product.class);
+        Root<Product> root = criteriaDelete.from(Product.class);
+
+        criteriaDelete.where(criteriaBuilder.between(root.get(Product_.id), DELETE_ID_START, DELETE_ID_END));
+
+        Query query = entityManager.createQuery(criteriaDelete);
+        query.executeUpdate();
+
+        entityManager.getTransaction().commit();
+    }
 
     @Test
     public void criteriaBatchUpdate() {
