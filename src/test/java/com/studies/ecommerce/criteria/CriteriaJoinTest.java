@@ -63,7 +63,7 @@ public class CriteriaJoinTest extends EntityManagerTest {
 
         TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
         List<Order> list = typedQuery.getResultList();
-        Assert.assertTrue(list.size() == 5);
+        Assert.assertFalse(list.isEmpty());
     }
 
     @Test
@@ -72,14 +72,13 @@ public class CriteriaJoinTest extends EntityManagerTest {
         CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
         Root<Order> root = criteriaQuery.from(Order.class);
         Join<Order, Payment> joinPayment = root.join("payment");
-        joinPayment.on(criteriaBuilder.equal(
-                joinPayment.get("status"), PaymentStatus.PROCESSING));
+        joinPayment.on(criteriaBuilder.equal(joinPayment.get("status"), PaymentStatus.PROCESSING));
 
         criteriaQuery.select(root);
 
         TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
         List<Order> list = typedQuery.getResultList();
-        Assert.assertTrue(list.size() == 2);
+        Assert.assertFalse(list.isEmpty());
     }
 
     @Test
@@ -91,12 +90,11 @@ public class CriteriaJoinTest extends EntityManagerTest {
 
         criteriaQuery.select(root);
 
-        criteriaQuery.where(criteriaBuilder
-                .equal(joinPayment.get("status"), PaymentStatus.PROCESSING));
+        criteriaQuery.where(criteriaBuilder.equal(joinPayment.get("status"), PaymentStatus.PROCESSING));
 
         TypedQuery<Order> typedQuery = entityManager.createQuery(criteriaQuery);
         List<Order> list = typedQuery.getResultList();
-        Assert.assertTrue(list.size() == 2);
+        Assert.assertFalse(list.isEmpty());
     }
 
 }

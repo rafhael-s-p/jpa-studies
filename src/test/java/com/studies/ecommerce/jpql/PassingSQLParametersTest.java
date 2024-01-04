@@ -31,7 +31,7 @@ public class PassingSQLParametersTest extends EntityManagerTest {
                 "where o.id = :orderId and p.status = ?1";
 
         TypedQuery<Order> typedQuery = entityManager.createQuery(jpql, Order.class);
-        typedQuery.setParameter("orderId", 2);
+        typedQuery.setParameter("orderId", 1);
         typedQuery.setParameter(1, PaymentStatus.PROCESSING);
 
         List<Order> list = typedQuery.getResultList();

@@ -162,7 +162,7 @@ public class CriteriaConditionalExpressionsTest extends EntityManagerTest {
 
         criteriaQuery.select(root);
 
-        criteriaQuery.where(criteriaBuilder.isEmpty(root.get(Product_.categories)));
+        criteriaQuery.where(criteriaBuilder.isEmpty(root.get(Product_.categories)), root.get(Product_.id).in(5).not());
 
         TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
         List<Product> list = typedQuery.getResultList();
