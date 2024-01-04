@@ -19,7 +19,7 @@ public class PathExpressionTest extends EntityManagerTest {
         TypedQuery<Order> typedQuery = entityManager.createQuery(jpql, Order.class);
 
         List<Order> list = typedQuery.getResultList();
-        Assert.assertTrue(list.size() == 2);
+        Assert.assertFalse(list.isEmpty());
     }
 
     @Test

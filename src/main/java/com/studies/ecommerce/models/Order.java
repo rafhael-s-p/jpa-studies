@@ -56,7 +56,7 @@ public class Order extends BaseEntity {
     }
 
     public void calculateTotalPrice() {
-        total = items != null ? BigDecimal.ZERO : items.stream()
+        total = items == null ? BigDecimal.ZERO : items.stream()
                     .map(item  -> new BigDecimal(item.getAmount()).multiply(item.getProductPrice()))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
     }

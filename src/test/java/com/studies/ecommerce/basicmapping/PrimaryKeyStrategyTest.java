@@ -59,7 +59,7 @@ public class PrimaryKeyStrategyTest extends EntityManagerTest {
     @Test
     public void identityGeneratorStrategy() {
         Category category = new Category();
-        category.setName("Sports");
+        category.setName("Winter Sports");
 
         entityManager.getTransaction().begin();
         entityManager.persist(category);

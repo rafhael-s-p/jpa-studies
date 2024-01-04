@@ -37,7 +37,7 @@ public class InheritanceTest extends EntityManagerTest {
 
     @Test
     public void insertPaymentOrder() {
-        Order order = entityManager.find(Order.class, 1);
+        Order order = entityManager.find(Order.class, 5);
 
         PaymentCard paymentCard = new PaymentCard();
         paymentCard.setOrder(order);

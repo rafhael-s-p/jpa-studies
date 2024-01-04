@@ -14,7 +14,7 @@ public class OneToOneRelationshipTest extends EntityManagerTest {
 
     @Test
     public void checkOneToOneCardPaymentRelationship() {
-        Order order = entityManager.find(Order.class, 1);
+        Order order = entityManager.find(Order.class, 5);
 
         PaymentCard paymentCard = new PaymentCard();
         paymentCard.setCardNumber("5123716344050150");
