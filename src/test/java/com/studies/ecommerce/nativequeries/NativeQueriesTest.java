@@ -1,6 +1,7 @@
 package com.studies.ecommerce.nativequeries;
 
 import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.models.OrderItem;
 import com.studies.ecommerce.models.Product;
 import org.junit.Test;
 
@@ -8,6 +9,33 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class NativeQueriesTest extends EntityManagerTest {
+
+    @Test
+    public void resultSetMapping02() {
+        String sql = "select oi.*, p.* from tab_order_item oi join tab_product p on p.id = oi.product_id";
+
+        Query query = entityManager.createNativeQuery(sql, "order_item-product.OrderItem-Product");
+
+        List<Object[]> list = query.getResultList();
+
+        list.stream().forEach(arr -> System.out.println(
+                String.format("Order => ID: %s --- Product => ID: %s, Name: %s",
+                        ((OrderItem) arr[0]).getId().getOrderId(),
+                        ((Product)arr[1]).getId(), ((Product)arr[1]).getName())));
+    }
+
+    @Test
+    public void resultSetMapping01() {
+        String sql = "select id, name, description, created_at, updated_at, price, product_photo " +
+                " from tab_product_store";
+
+        Query query = entityManager.createNativeQuery(sql, "product_store.Product");
+
+        List<Product> list = query.getResultList();
+
+        list.stream().forEach(obj -> System.out.println(
+                String.format("Product => ID: %s, Nome: %s", obj.getId(), obj.getName())));
+    }
 
     @Test
     public void passingParameters() {
