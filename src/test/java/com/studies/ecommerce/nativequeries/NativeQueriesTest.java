@@ -10,6 +10,18 @@ import java.util.List;
 
 public class NativeQueriesTest extends EntityManagerTest {
 
+    /*@Test
+    public void fieldResult() {
+        String sql = "select * from tab_product_ecm";
+
+        Query query = entityManager.createNativeQuery(sql, "product_ecm.Product");
+
+        List<Product> list = query.getResultList();
+
+        list.stream().forEach(obj -> System.out.println(
+                String.format("Product => ID: %s, Name: %s", obj.getId(), obj.getName())));
+    }*/
+
     @Test
     public void resultSetMapping02() {
         String sql = "select oi.*, p.* from tab_order_item oi join tab_product p on p.id = oi.product_id";
