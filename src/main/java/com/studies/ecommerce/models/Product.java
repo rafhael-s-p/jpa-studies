@@ -1,5 +1,6 @@
 package com.studies.ecommerce.models;
 
+import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.listener.GenericListener;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,15 @@ import java.util.List;
                                 @FieldResult(name = "product_photo", column = "prd_product_photo"),
                                 @FieldResult(name = "created_at", column = "prd_created_at"),
                                 @FieldResult(name = "updated_at", column = "prd_updated_at")
-                        }) })
+                        }) }),
+        @SqlResultSetMapping(name = "product_ecm.ProductDTO",
+                classes = {
+                        @ConstructorResult(targetClass = ProductDTO.class,
+                                columns = {
+                                        @ColumnResult(name = "prd_id", type = Integer.class),
+                                        @ColumnResult(name = "prd_name", type = String.class)
+                                })
+                })
 })
 @NamedQueries({
         @NamedQuery(name = "Product.list", query = "select p from Product p"),
