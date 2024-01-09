@@ -1,6 +1,7 @@
 package com.studies.ecommerce.nativequeries;
 
 import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.models.OrderItem;
 import com.studies.ecommerce.models.Product;
 import org.junit.Test;
@@ -9,6 +10,18 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class NativeQueriesTest extends EntityManagerTest {
+
+    @Test
+    public void fieldResultReturningDTO() {
+        String sql = "select * from tab_product_ecm";
+
+        Query query = entityManager.createNativeQuery(sql, "product_ecm.ProductDTO");
+
+        List<ProductDTO> list = query.getResultList();
+
+        list.stream().forEach(obj -> System.out.println(
+                String.format("ProductDTO => ID: %s, Name: %s", obj.getId(), obj.getName())));
+    }
 
     /*@Test
     public void fieldResult() {
