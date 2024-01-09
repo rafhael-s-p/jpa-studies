@@ -9,12 +9,23 @@
         <query>select * from tab_category_ecm</query>
     </named-native-query>
 
+    <named-native-query name="category_ecm.list.dto" result-set-mapping="category_ecm.CategoryDTO">
+        <query>select cat_id, cat_name from tab_category_ecm</query>
+    </named-native-query>
+
     <sql-result-set-mapping name="category_ecm.Category">
         <entity-result entity-class="com.studies.ecommerce.models.Category">
             <field-result name="id" column="cat_id"/>
             <field-result name="name" column="cat_name"/>
             <field-result name="categoryFather" column="category_father_id"/>
         </entity-result>
+    </sql-result-set-mapping>
+
+    <sql-result-set-mapping name="category_ecm.CategoryDTO">
+        <constructor-result target-class="com.studies.ecommerce.dto.CategoryDTO">
+            <column name="cat_id"/>
+            <column name="cat_name"/>
+        </constructor-result>
     </sql-result-set-mapping>
 
 </entity-mappings>
