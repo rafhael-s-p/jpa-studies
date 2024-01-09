@@ -20,8 +20,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<Product> list = query.getResultList();
 
-        list.stream().forEach(obj -> System.out.println(
-                String.format("Product => ID: %s, Name: %s", obj.getId(), obj.getName())));
+        list.forEach(obj -> System.out.printf("Product => ID: %s, Name: %s%n", obj.getId(), obj.getName()));
     }
 
     @Test
@@ -30,8 +29,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<Product> list = query.getResultList();
 
-        list.stream().forEach(obj -> System.out.println(
-                String.format("Product => ID: %s, Name: %s", obj.getId(), obj.getName())));
+        list.forEach(obj -> System.out.printf("Product => ID: %s, Name: %s%n", obj.getId(), obj.getName()));
     }
 
     @Test
@@ -42,8 +40,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<ProductDTO> list = query.getResultList();
 
-        list.stream().forEach(obj -> System.out.println(
-                String.format("ProductDTO => ID: %s, Name: %s", obj.getId(), obj.getName())));
+        list.forEach(obj -> System.out.printf("ProductDTO => ID: %s, Name: %s%n", obj.getId(), obj.getName()));
     }
 
     @Ignore
@@ -56,8 +53,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<Product> list = query.getResultList();
 
-        list.stream().forEach(obj -> System.out.println(
-                String.format("Product => ID: %s, Name: %s", obj.getId(), obj.getName())));
+        list.forEach(obj -> System.out.printf("Product => ID: %s, Name: %s%n", obj.getId(), obj.getName()));
     }
 
     @Test
@@ -68,10 +64,9 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<Object[]> list = query.getResultList();
 
-        list.stream().forEach(arr -> System.out.println(
-                String.format("Order => ID: %s --- Product => ID: %s, Name: %s",
-                        ((OrderItem) arr[0]).getId().getOrderId(),
-                        ((Product)arr[1]).getId(), ((Product)arr[1]).getName())));
+        list.forEach(arr -> System.out.printf("Order => ID: %s -- Product => ID: %s, Name: %s%n",
+                ((OrderItem) arr[0]).getId().getOrderId(),
+                ((Product)arr[1]).getId(), ((Product)arr[1]).getName()));
     }
 
     @Test
@@ -83,8 +78,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<Product> list = query.getResultList();
 
-        list.stream().forEach(obj -> System.out.println(
-                String.format("Product => ID: %s, Nome: %s", obj.getId(), obj.getName())));
+        list.forEach(obj -> System.out.printf("Product => ID: %s, Nome: %s%n", obj.getId(), obj.getName()));
     }
 
     @Test
@@ -99,8 +93,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<Product> list = query.getResultList();
 
-        list.stream().forEach(obj -> System.out.println(
-                String.format("Product => ID: %s, Nome: %s", obj.getId(), obj.getName())));
+        list.forEach(obj -> System.out.printf("Product => ID: %s, Nome: %s%n", obj.getId(), obj.getName()));
     }
 
     @Test
@@ -122,8 +115,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<Product> list = query.getResultList();
 
-        list.stream().forEach(obj -> System.out.println(
-                String.format("Product => ID: %s, Name: %s", obj.getId(), obj.getName())));
+        list.forEach(obj -> System.out.printf("Product => ID: %s, Name: %s%n", obj.getId(), obj.getName()));
     }
 
     @Test
@@ -133,8 +125,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         List<Object[]> list = query.getResultList();
 
-        list.stream().forEach(arr -> System.out.println(
-                String.format("Product => ID: %s, Name: %s", arr[0], arr[1])));
+        list.forEach(arr -> System.out.printf("Product => ID: %s, Name: %s%n", arr[0], arr[1]));
     }
 
 }
