@@ -1,6 +1,7 @@
 package com.studies.ecommerce.nativequeries;
 
 import com.studies.ecommerce.EntityManagerTest;
+import com.studies.ecommerce.dto.CategoryDTO;
 import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.models.Category;
 import com.studies.ecommerce.models.OrderItem;
@@ -12,6 +13,15 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class NativeQueriesTest extends EntityManagerTest {
+
+    @Test
+    public void namedNativeQueryUsingXMLFileReturningDTO() {
+        Query query = entityManager.createNamedQuery("category_ecm.list.dto");
+
+        List<CategoryDTO> list = query.getResultList();
+
+        list.forEach(obj -> System.out.printf("CategoryDTO => ID: %s, Name: %s%n", obj.getId(), obj.getName()));
+    }
 
     @Test
     public void namedNativeQueryUsingXMLFile() {
