@@ -4,12 +4,35 @@ import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.models.OrderItem;
 import com.studies.ecommerce.models.Product;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.persistence.Query;
 import java.util.List;
 
 public class NativeQueriesTest extends EntityManagerTest {
+
+    @Ignore
+    @Test
+    public void namedNativeQuery02() {
+        // It seems JPA has a bug and Field Result requires all fields in order to JPA do the cast, including relationships. It must be checked out later.
+        Query query = entityManager.createNamedQuery("product_ecm.list");
+
+        List<Product> list = query.getResultList();
+
+        list.stream().forEach(obj -> System.out.println(
+                String.format("Product => ID: %s, Name: %s", obj.getId(), obj.getName())));
+    }
+
+    @Test
+    public void namedNativeQuery01() {
+        Query query = entityManager.createNamedQuery("product_store.list");
+
+        List<Product> list = query.getResultList();
+
+        list.stream().forEach(obj -> System.out.println(
+                String.format("Product => ID: %s, Name: %s", obj.getId(), obj.getName())));
+    }
 
     @Test
     public void fieldResultReturningDTO() {
@@ -23,8 +46,10 @@ public class NativeQueriesTest extends EntityManagerTest {
                 String.format("ProductDTO => ID: %s, Name: %s", obj.getId(), obj.getName())));
     }
 
-    /*@Test
+    @Ignore
+    @Test
     public void fieldResult() {
+        // It seems JPA has a bug and Field Result requires all fields in order to JPA do the cast, including relationships. It must be checked out later.
         String sql = "select * from tab_product_ecm";
 
         Query query = entityManager.createNativeQuery(sql, "product_ecm.Product");
@@ -33,7 +58,7 @@ public class NativeQueriesTest extends EntityManagerTest {
 
         list.stream().forEach(obj -> System.out.println(
                 String.format("Product => ID: %s, Name: %s", obj.getId(), obj.getName())));
-    }*/
+    }
 
     @Test
     public void resultSetMapping02() {
