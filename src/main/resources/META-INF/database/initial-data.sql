@@ -59,3 +59,12 @@ insert into tab_product_erp (id, name, price, description) values (301, 'Kindle'
 insert into tab_product_erp (id, name, price, description) values (303, 'GoPro Hero 7 Camera', 1500.0, '2x better performance.');
 insert into tab_product_erp (id, name, price, description) values (304, 'Canon 80D Camera', 3500.0, 'The best focus adjustment.');
 insert into tab_product_erp (id, name, price, description) values (305, 'Lapel microphone', 80.0, 'Good sound capture.');
+
+insert into tab_category_ecm (name) values ('Electronics');
+insert into tab_category_ecm (name) values ('Books');
+insert into tab_category_ecm (name) values ('Sports');
+insert into tab_category_ecm (name) values ('Soccer');
+insert into tab_category_ecm (name) values ('Swimming');
+insert into tab_category_ecm (name) values ('Laptops');
+insert into tab_category_ecm (name) values ('Smartphones');
+insert into tab_category_ecm (name) values ('Cameras');
