@@ -10,6 +10,12 @@ import java.util.Map;
 
 @Getter
 @Setter
+@NamedStoredProcedureQuery(name = "clients_who_bought_above_average", procedureName = "clients_who_bought_above_average",
+        parameters = {
+                @StoredProcedureParameter(name = "sell_year", type = Integer.class, mode = ParameterMode.IN)
+        },
+        resultClasses = Client.class
+)
 @SecondaryTable(name = "tab_client_detail",
         pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"),
         foreignKey = @ForeignKey(name = "fk_client_detail_client"))
