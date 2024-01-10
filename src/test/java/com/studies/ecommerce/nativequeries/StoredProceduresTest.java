@@ -16,6 +16,18 @@ public class StoredProceduresTest extends EntityManagerTest {
     public static final BigDecimal TEN_PERCENT_OFF = BigDecimal.valueOf(0.1);
 
     @Test
+    public void namedStoredProcedure() {
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createNamedStoredProcedureQuery("clients_who_bought_above_average");
+
+        storedProcedureQuery.setParameter("sell_year", 2024);
+
+        List<Client> list = storedProcedureQuery.getResultList();
+
+        Assert.assertFalse(list.isEmpty());
+    }
+
+    @Test
     public void adjustPriceProduct() {
         StoredProcedureQuery storedProcedureQuery = entityManager
                 .createStoredProcedureQuery("adjust_price_product", Client.class);
