@@ -5,6 +5,10 @@ create table tab_product_ecm (prd_id integer not null auto_increment, prd_name v
 create table tab_product_erp (id integer not null auto_increment, name varchar(100), price decimal(19, 2), description longtext, primary key (id)) engine=InnoDB;
 create table tab_category_ecm (cat_id integer not null auto_increment, cat_name varchar(100), category_father_id integer, primary key (cat_id)) engine=InnoDB;
 
+create procedure find_product_name(in product_id int, out product_name varchar(255)) begin select name into product_name from tab_product where id = product_id; end
+create procedure clients_who_bought_above_average(in sell_year integer) begin select cli.* from tab_client cli join tab_order ped on ord.client_id = cli.id where ord.status = 'PAID' and year(ord.created_at) = sell_year group by ord.client_id having sum(ord.total) >= (select avg(total_by_client.total_sum) from (select sum(ord2.total) total_sum from tab_order ord2 where ord.status = 'PAID' and year(ord2.created_at) = sell_year group by ord2.client_id) as total_by_client); end
+create procedure adjust_price_product(in product_id int, in percentage_adjustment double, out adjusted_price double) begin declare product_price double; select price into product_price from tab_product where id = product_id; set adjusted_price = product_price + (product_price * percentage_adjustment); update tab_product set price = adjusted_price where id = product_id; end
+
 --create table tab_category (id integer not null auto_increment, name varchar(100) not null, category_father_id integer, primary key (id)) engine=InnoDB;
 --create table tab_client (id integer not null auto_increment, name varchar(100) not null, ssn varchar(11) not null, primary key (id)) engine=InnoDB;
 --create table tab_client_contact (client_id integer not null, description varchar(255), type varchar(255) not null, primary key (client_id, type)) engine=InnoDB;
