@@ -7,11 +7,33 @@ import org.junit.Test;
 
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class StoredProceduresTest extends EntityManagerTest {
 
     public static final Integer PRODUCT_ID = 1;
+    public static final BigDecimal TEN_PERCENT_OFF = BigDecimal.valueOf(0.1);
+
+    @Test
+    public void adjustPriceProduct() {
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("adjust_price_product", Client.class);
+
+        storedProcedureQuery.registerStoredProcedureParameter("product_id", Integer.class, ParameterMode.IN);
+
+        storedProcedureQuery.registerStoredProcedureParameter("percentage_adjustment", BigDecimal.class, ParameterMode.IN);
+
+        storedProcedureQuery.registerStoredProcedureParameter("adjusted_price", BigDecimal.class, ParameterMode.OUT);
+
+        storedProcedureQuery.setParameter("product_id", PRODUCT_ID);
+        storedProcedureQuery.setParameter("percentage_adjustment", TEN_PERCENT_OFF);
+
+        BigDecimal adjustedPrice = (BigDecimal) storedProcedureQuery
+                .getOutputParameterValue("adjusted_price");
+
+        Assert.assertEquals(new BigDecimal("878.9"), adjustedPrice);
+    }
 
     @Test
     public void receivingListAsProcedure() {
