@@ -1,5 +1,6 @@
 package com.studies.ecommerce.models;
 
+import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.listener.GenericListener;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,37 @@ import java.util.List;
 
 @Getter
 @Setter
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "product_store.list",
+                query = "select id, name, description, created_at, updated_at, price, product_photo " +
+                        " from tab_product_store", resultClass = Product.class),
+        @NamedNativeQuery(name = "product_ecm.list",
+                query = "select * from tab_product_ecm",
+                resultSetMapping = "product_ecm.Product")
+})
+@SqlResultSetMappings({
+        @SqlResultSetMapping(name = "product_store.Product",
+                entities = { @EntityResult(entityClass = Product.class) }),
+        @SqlResultSetMapping(name = "product_ecm.Product",
+                entities = { @EntityResult(entityClass = Product.class,
+                        fields = {
+                                @FieldResult(name = "id", column = "prd_id"),
+                                @FieldResult(name = "name", column = "prd_name"),
+                                @FieldResult(name = "description", column = "prd_description"),
+                                @FieldResult(name = "price", column = "prd_price"),
+                                @FieldResult(name = "product_photo", column = "prd_product_photo"),
+                                @FieldResult(name = "created_at", column = "prd_created_at"),
+                                @FieldResult(name = "updated_at", column = "prd_updated_at")
+                        }) }),
+        @SqlResultSetMapping(name = "product_ecm.ProductDTO",
+                classes = {
+                        @ConstructorResult(targetClass = ProductDTO.class,
+                                columns = {
+                                        @ColumnResult(name = "prd_id", type = Integer.class),
+                                        @ColumnResult(name = "prd_name", type = String.class)
+                                })
+                })
+})
 @NamedQueries({
         @NamedQuery(name = "Product.list", query = "select p from Product p"),
         @NamedQuery(name = "Product.listByCategory", query = "select p from Product p where exists (select 1 from Category c2 join c2.products p2 where p2 = p and c2.id = :category)")

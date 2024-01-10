@@ -1,5 +1,16 @@
 create function average_above_revenue(average_value double) returns boolean reads sql data return average_value > (select avg(total) from tab_order);
 
+create table tab_product_store (id integer not null auto_increment, name varchar(100), price decimal(19, 2), created_at datetime(6), updated_at datetime(6), description longtext, product_photo longblob, primary key (id)) engine=InnoDB;
+create table tab_product_ecm (prd_id integer not null auto_increment, prd_name varchar(100), prd_price decimal(19, 2), prd_created_at datetime(6), prd_updated_at datetime(6), prd_description longtext, prd_product_photo longblob, primary key (prd_id)) engine=InnoDB;
+create table tab_product_erp (id integer not null auto_increment, name varchar(100), price decimal(19, 2), description longtext, primary key (id)) engine=InnoDB;
+create table tab_category_ecm (cat_id integer not null auto_increment, cat_name varchar(100), category_father_id integer, primary key (cat_id)) engine=InnoDB;
+
+create procedure find_product_name(in product_id int, out product_name varchar(255)) begin select name into product_name from tab_product where id = product_id; end
+create procedure clients_who_bought_above_average(in sell_year integer) begin select cli.*, cli_d.* from tab_client cli join tab_client_detail cli_d on cli_d.client_id = cli.id join tab_order ord on ord.client_id = cli.id where ord.status = 'PAID' and year(ord.created_at) = sell_year group by ord.client_id having sum(ord.total) >= (select avg(total_by_client.total_sum) from (select sum(ord2.total) total_sum from tab_order ord2 where ord2.status = 'PAID' and year(ord2.created_at) = sell_year group by ord2.client_id) as total_by_client); end
+create procedure adjust_price_product(in product_id int, in percentage_adjustment double, out adjusted_price double) begin declare product_price double; select price into product_price from tab_product where id = product_id; set adjusted_price = product_price + (product_price * percentage_adjustment); update tab_product set price = adjusted_price where id = product_id; end
+
+create view clients_who_bought_above_average_view as select cli.*, cli_d.* from tab_client cli join tab_client_detail cli_d on cli_d.client_id = cli.id join tab_order ord on ord.client_id = cli.id where ord.status = 'PAID' and year(ord.created_at) = year(current_date) group by ord.client_id having sum(ord.total) >= (select avg(total_by_client.total_sum) from (select sum(ord2.total) total_sum from tab_order ord2 where ord2.status = 'PAID' and year(ord2.created_at) = year(current_date) group by ord2.client_id) as total_by_client);
+
 --create table tab_category (id integer not null auto_increment, name varchar(100) not null, category_father_id integer, primary key (id)) engine=InnoDB;
 --create table tab_client (id integer not null auto_increment, name varchar(100) not null, ssn varchar(11) not null, primary key (id)) engine=InnoDB;
 --create table tab_client_contact (client_id integer not null, description varchar(255), type varchar(255) not null, primary key (client_id, type)) engine=InnoDB;

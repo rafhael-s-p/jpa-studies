@@ -44,3 +44,27 @@ insert into tab_category (name) values ('Cameras');
 insert into tab_product_category (product_id, category_id) values (1, 2);
 insert into tab_product_category (product_id, category_id) values (3, 8);
 insert into tab_product_category (product_id, category_id) values (4, 8);
+
+insert into tab_product_store (id, name, price, created_at, description) values (101, 'Kindle', 799.0, date_sub(sysdate(), interval 1 day), 'Meet the new Kindle, now with adjustable built-in lighting, which allows you to read indoors or outdoors, at any time of the day.');
+insert into tab_product_store (id, name, price, created_at, description) values (103, 'GoPro Hero 7 Camera', 1500.0, date_sub(sysdate(), interval 1 day), '2x better performance.');
+insert into tab_product_store (id, name, price, created_at, description) values (104, 'Canon 80D Camera', 3500.0, sysdate(), 'The best focus adjustment.');
+insert into tab_product_store (id, name, price, created_at, description) values (105, 'Lapel microphone', 80.0, sysdate(), 'Good sound capture.');
+
+insert into tab_product_ecm (prd_id, prd_name, prd_price, prd_created_at, prd_description) values (201, 'Kindle', 799.0, date_sub(sysdate(), interval 1 day), 'Meet the new Kindle, now with adjustable built-in lighting, which allows you to read indoors or outdoors, at any time of the day.');
+insert into tab_product_ecm (prd_id, prd_name, prd_price, prd_created_at, prd_description) values (203, 'GoPro Hero 7 Camera', 1500.0, date_sub(sysdate(), interval 1 day), '2x better performance.');
+insert into tab_product_ecm (prd_id, prd_name, prd_price, prd_created_at, prd_description) values (204, 'Canon 80D Camera', 3500.0, sysdate(), 'The best focus adjustment.');
+insert into tab_product_ecm (prd_id, prd_name, prd_price, prd_created_at, prd_description) values (205, 'Lapel microphone', 80.0, sysdate(), 'Good sound capture.');
+
+insert into tab_product_erp (id, name, price, description) values (301, 'Kindle', 799.0, 'Meet the new Kindle, now with adjustable built-in lighting, which allows you to read indoors or outdoors, at any time of the day.');
+insert into tab_product_erp (id, name, price, description) values (303, 'GoPro Hero 7 Camera', 1500.0, '2x better performance.');
+insert into tab_product_erp (id, name, price, description) values (304, 'Canon 80D Camera', 3500.0, 'The best focus adjustment.');
+insert into tab_product_erp (id, name, price, description) values (305, 'Lapel microphone', 80.0, 'Good sound capture.');
+
+insert into tab_category_ecm (name) values ('Electronics');
+insert into tab_category_ecm (name) values ('Books');
+insert into tab_category_ecm (name) values ('Sports');
+insert into tab_category_ecm (name) values ('Soccer');
+insert into tab_category_ecm (name) values ('Swimming');
+insert into tab_category_ecm (name) values ('Laptops');
+insert into tab_category_ecm (name) values ('Smartphones');
+insert into tab_category_ecm (name) values ('Cameras');

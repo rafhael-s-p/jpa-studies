@@ -6,6 +6,7 @@
     <persistence-unit name="Ecommerce-PU">
         <mapping-file>META-INF/queries/order.xml</mapping-file>
         <mapping-file>META-INF/queries/product.xml</mapping-file>
+        <mapping-file>META-INF/queries/category.xml</mapping-file>
 
         <properties>
             <property name="javax.persistence.jdbc.url"

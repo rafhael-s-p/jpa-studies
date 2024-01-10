@@ -1,5 +1,15 @@
 drop function if exists average_above_revenue;
 
+drop table if exists tab_product_store;
+drop table if exists tab_product_ecm;
+drop table if exists tab_product_erp;
+drop table if exists tab_category_ecm;
+
+drop procedure if exists find_product_name;
+drop procedure if exists clients_who_bought_above_average;
+drop procedure if exists adjust_price_product;
+
+drop view if exists clients_who_bought_above_average_view;
 
 --alter table tab_category drop foreign key fk_category_categoryfather;
 --alter table tab_client_contact drop foreign key fk_client_contact_client;
