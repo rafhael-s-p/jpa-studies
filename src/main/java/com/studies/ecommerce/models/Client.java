@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +28,12 @@ import java.util.Map;
         indexes = { @Index(name = "idx_client_name", columnList = "name") })
 public class Client extends BaseEntity {
 
+    @NotBlank
     @Column(length = 100, nullable = false)
     private String name;
 
+    @NotNull
+    //@Pattern(regexp = "(^\\d{3}\\x2D\\d{2}\\x2D\\d{4}$)")
     @Column(length = 11, nullable = false)
     private String ssn;
 
@@ -42,10 +48,12 @@ public class Client extends BaseEntity {
     @Transient
     private String firstName;
 
+    @NotNull
     @Column(table = "tab_client_detail")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Past
     @Column(table = "tab_client_detail")
     private LocalDate birthday;
 

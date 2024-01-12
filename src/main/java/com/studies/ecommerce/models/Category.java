@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -14,6 +15,7 @@ import java.util.List;
         indexes = { @Index(name = "idx_category_name", columnList = "name") })
 public class Category extends BaseEntity {
 
+    @NotBlank
     @Column(length = 100, nullable = false)
     private String name;
 

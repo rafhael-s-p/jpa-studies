@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 @Getter
@@ -22,21 +24,27 @@ public class OrderItem {
     @EmbeddedId
     private OrderItemId id;
 
+    @NotNull
     @MapsId("orderId")
     @ManyToOne(optional = false)
     @JoinColumn(name = "order_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_order_item_order"))
     private Order order;
 
+    @NotNull
     @MapsId("productId")
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_order_item_product"))
     private Product product;
 
+    @Positive
+    @NotNull
     @Column(name = "product_price")
     private BigDecimal productPrice;
 
+    @Positive
+    @NotNull
     @Column(nullable = false)
     private Integer amount;
 

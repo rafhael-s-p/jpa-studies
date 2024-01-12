@@ -6,6 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,29 +21,37 @@ import java.util.List;
 @Table(name = "tab_order")
 public class Order extends BaseEntity {
 
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_order_client"))
     private Client client;
 
+    @NotEmpty
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
 
+    @PastOrPresent
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
+    @PastOrPresent
     @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
 
+    @PastOrPresent
     @Column(name = "confirmed_at")
     private LocalDateTime confirmedAt;
 
     @OneToOne(mappedBy = "order")
     private Invoice invoice;
 
+    @NotNull
+    @Positive
     @Column(precision = 18, scale = 2, nullable = false)
     private BigDecimal total;
 
+    @NotNull
     @Column(length = 30, nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
