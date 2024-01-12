@@ -1,21 +1,20 @@
 package com.studies.ecommerce.basicmapping;
 
 import com.studies.ecommerce.EntityManagerTest;
-import com.studies.ecommerce.models.Address;
-import com.studies.ecommerce.models.Client;
-import com.studies.ecommerce.models.Order;
-import com.studies.ecommerce.models.OrderStatus;
+import com.studies.ecommerce.models.*;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EmbeddedObjectTest extends EntityManagerTest {
 
     @Test
     public void builtInObjectMapping() {
 
+        Product product = entityManager.find(Product.class, 1);
         Client client = entityManager.find(Client.class, 1);
 
         Address deliveryAddress = new Address();
@@ -27,8 +26,15 @@ public class EmbeddedObjectTest extends EntityManagerTest {
         deliveryAddress.setCity("San Francisco");
         deliveryAddress.setState("California");
 
+        OrderItem orderItem = new OrderItem();
+        orderItem.setId(new OrderItemId());
+        orderItem.setProductPrice(product.getPrice());
+        orderItem.setAmount(1);
+        orderItem.setProduct(product);
+
         Order order = new Order();
         order.setCreatedAt(LocalDateTime.now());
+        order.setItems(List.of(orderItem));
         order.setStatus(OrderStatus.WAITING);
         order.setTotal(new BigDecimal(250));
         order.setDeliveryAddress(deliveryAddress);

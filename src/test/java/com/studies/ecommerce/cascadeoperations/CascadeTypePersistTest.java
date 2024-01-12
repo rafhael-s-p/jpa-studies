@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 public class CascadeTypePersistTest extends EntityManagerTest {
 
@@ -29,6 +30,7 @@ public class CascadeTypePersistTest extends EntityManagerTest {
         orderItem.setProduct(product);
         orderItem.setAmount(1);
         orderItem.setProductPrice(product.getPrice());
+        order.setItems(List.of(orderItem));
 
         entityManager.getTransaction().begin();
         entityManager.persist(orderItem);

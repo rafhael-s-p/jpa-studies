@@ -6,6 +6,7 @@ import com.studies.ecommerce.models.Product;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class ManyToManyRelationshipTest extends EntityManagerTest {
@@ -18,6 +19,7 @@ public class ManyToManyRelationshipTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         // category.setProducts(Arrays.asList(product)); // it does not work because product is the relationship owner
         product.setCategories(Arrays.asList(category));
+        product.setUpdatedAt(LocalDateTime.now());
         entityManager.getTransaction().commit();
         entityManager.clear();
 

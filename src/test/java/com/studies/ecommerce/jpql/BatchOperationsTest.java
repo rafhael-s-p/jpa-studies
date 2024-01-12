@@ -64,6 +64,7 @@ public class BatchOperationsTest extends EntityManagerTest {
             product.setDescription(columnProduct[1]);
             product.setPrice(new BigDecimal(columnProduct[2].replaceAll("\\s", "")));
             product.setCreatedAt(LocalDateTime.now());
+            product.setUpdatedAt(LocalDateTime.now());
 
             entityManager.persist(product);
 

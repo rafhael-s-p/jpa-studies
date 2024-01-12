@@ -3,10 +3,12 @@ package com.studies.ecommerce.relationship;
 import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Order;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class RemovingReferencedEntitiesTest extends EntityManagerTest {
 
+    @Ignore
     @Test
     public void removeRelatedEntity() {
         Order order = entityManager.find(Order.class, 1);

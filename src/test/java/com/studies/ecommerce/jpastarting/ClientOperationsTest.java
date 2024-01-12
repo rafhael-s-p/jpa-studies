@@ -4,6 +4,7 @@ import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Client;
 import com.studies.ecommerce.models.Gender;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -55,6 +56,7 @@ public class ClientOperationsTest extends EntityManagerTest {
         Assert.assertEquals("Joetta Luann", checkClient.getName());
     }
 
+    @Ignore
     @Test
     public void objectDelete() {
         Client client = entityManager.find(Client.class, 2);

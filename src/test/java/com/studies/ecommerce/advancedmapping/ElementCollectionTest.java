@@ -7,6 +7,7 @@ import com.studies.ecommerce.models.ProductCharacteristic;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -18,6 +19,7 @@ public class ElementCollectionTest extends EntityManagerTest {
 
         Product product = entityManager.find(Product.class, 1);
         product.setTags(Arrays.asList("ebook", "digital-book"));
+        product.setUpdatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().commit();
         entityManager.clear();
@@ -34,6 +36,7 @@ public class ElementCollectionTest extends EntityManagerTest {
         Product product = entityManager.find(Product.class, 1);
         product.setCharacteristics(Arrays.asList(new ProductCharacteristic("screen", "220x500"),
                 new ProductCharacteristic("color", "black")));
+        product.setUpdatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().commit();
         entityManager.clear();

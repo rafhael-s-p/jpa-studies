@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CompositeKeyTest extends EntityManagerTest {
 
@@ -28,6 +29,7 @@ public class CompositeKeyTest extends EntityManagerTest {
         orderItem.setProduct(product);
         orderItem.setProductPrice(product.getPrice());
         orderItem.setAmount(1);
+        order.setItems(List.of(orderItem));
 
         entityManager.persist(order);
         entityManager.persist(orderItem);

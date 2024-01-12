@@ -28,6 +28,7 @@ public class EnumerationsMappingTest extends EntityManagerTest {
         Client checkClient = entityManager.find(Client.class, client.getId());
 
         Assert.assertNotNull(checkClient);
-        Assert.assertEquals(checkClient.getGender(), Gender.FEMALE);
+        Assert.assertEquals(Gender.FEMALE, checkClient.getGender());
     }
+
 }
