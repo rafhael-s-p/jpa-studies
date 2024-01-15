@@ -2,6 +2,7 @@ package com.studies.ecommerce.models;
 
 import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.listener.GenericListener;
+import com.studies.ecommerce.models.converter.BooleanToYesNoConverter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -70,6 +71,11 @@ public class Product extends BaseEntity {
     @Lob
     @Column(name = "product_photo")
     private byte[] productPhoto;
+
+    @Convert(converter = BooleanToYesNoConverter.class)
+    @NotNull
+    @Column(length = 3, nullable = false)
+    private Boolean active = Boolean.FALSE;
 
     @PastOrPresent
     @NotNull
