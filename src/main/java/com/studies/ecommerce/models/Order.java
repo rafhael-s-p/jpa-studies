@@ -27,7 +27,7 @@ import java.util.List;
 public class Order extends BaseEntity implements PersistentAttributeInterceptable {
 
     @NotNull
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_order_client"))
     private Client client;
