@@ -2,8 +2,13 @@ package com.studies.ecommerce.models;
 
 import com.studies.ecommerce.listener.GenericListener;
 import com.studies.ecommerce.listener.InvoiceGenerateListener;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.engine.spi.PersistentAttributeInterceptable;
+import org.hibernate.engine.spi.PersistentAttributeInterceptor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -19,7 +24,7 @@ import java.util.List;
 @EntityListeners({ InvoiceGenerateListener.class, GenericListener.class })
 @Entity
 @Table(name = "tab_order")
-public class Order extends BaseEntity {
+public class Order extends BaseEntity implements PersistentAttributeInterceptable {
 
     @NotNull
     @ManyToOne(optional = false)
@@ -43,7 +48,8 @@ public class Order extends BaseEntity {
     @Column(name = "confirmed_at")
     private LocalDateTime confirmedAt;
 
-    @OneToOne(mappedBy = "order")
+    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     private Invoice invoice;
 
     @NotNull
@@ -60,8 +66,58 @@ public class Order extends BaseEntity {
     @Column(name = "delivery_address")
     private Address deliveryAddress;
 
-    @OneToOne(mappedBy = "order")
+    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     private Payment payment;
+
+    public Invoice getInvoice() {
+        if (this.persistentAttributeInterceptor != null)
+            return (Invoice) persistentAttributeInterceptor
+                    .readObject(this, "invoice", this.invoice);
+
+        return this.invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        if (this.persistentAttributeInterceptor != null) {
+            this.invoice = (Invoice) persistentAttributeInterceptor
+                    .writeObject(this, "invoice", this.invoice, invoice);
+        } else {
+            this.invoice = invoice;
+        }
+    }
+
+    public Payment getPayment() {
+        if (this.persistentAttributeInterceptor != null)
+            return (Payment) persistentAttributeInterceptor
+                    .readObject(this, "payment", this.payment);
+
+        return this.payment;
+    }
+
+    public void setPayment(Payment payment) {
+        if (this.persistentAttributeInterceptor != null) {
+            this.payment = (Payment) persistentAttributeInterceptor
+                    .writeObject(this, "payment", this.payment, payment);
+        } else {
+            this.payment = payment;
+        }
+    }
+
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @Transient
+    private PersistentAttributeInterceptor persistentAttributeInterceptor;
+
+    @Override
+    public PersistentAttributeInterceptor $$_hibernate_getInterceptor() {
+        return this.persistentAttributeInterceptor;
+    }
+
+    @Override
+    public void $$_hibernate_setInterceptor(PersistentAttributeInterceptor persistentAttributeInterceptor) {
+        this.persistentAttributeInterceptor = persistentAttributeInterceptor;
+    }
 
     public boolean isPaid() {
         return OrderStatus.PAID.equals(status);
