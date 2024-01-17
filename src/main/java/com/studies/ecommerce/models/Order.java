@@ -21,6 +21,29 @@ import java.util.List;
 
 @Getter
 @Setter
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "Order.essentialAttributes",
+                attributeNodes = {
+                        @NamedAttributeNode("createdAt"),
+                        @NamedAttributeNode("status"),
+                        @NamedAttributeNode("total"),
+                        @NamedAttributeNode(
+                                value = "client",
+                                subgraph = "cli"
+                        )
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "cli",
+                                attributeNodes = {
+                                        @NamedAttributeNode("name"),
+                                        @NamedAttributeNode("ssn")
+                                }
+                        )
+                }
+        )
+})
 @EntityListeners({ InvoiceGenerateListener.class, GenericListener.class })
 @Entity
 @Table(name = "tab_order")
