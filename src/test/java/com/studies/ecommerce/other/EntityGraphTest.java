@@ -2,7 +2,9 @@ package com.studies.ecommerce.other;
 
 import com.studies.ecommerce.EntityManagerTest;
 import com.studies.ecommerce.models.Client;
+import com.studies.ecommerce.models.Client_;
 import com.studies.ecommerce.models.Order;
+import com.studies.ecommerce.models.Order_;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,11 +18,10 @@ public class EntityGraphTest extends EntityManagerTest {
     @Test
     public void findEssentialAttributesOfOrder02() {
         EntityGraph<Order> entityGraph = entityManager.createEntityGraph(Order.class);
-        entityGraph.addAttributeNodes(
-                "createdAt", "status", "total");
+        entityGraph.addAttributeNodes(Order_.createdAt, Order_.status, Order_.total);
 
-        Subgraph<Client> subgraphClient = entityGraph.addSubgraph("client", Client.class);
-        subgraphClient.addAttributeNodes("name", "ssn");
+        Subgraph<Client> subgraphClient = entityGraph.addSubgraph(Order_.client);
+        subgraphClient.addAttributeNodes(Client_.name, Client_.ssn);
 
         TypedQuery<Order> typedQuery = entityManager.createQuery("select o from Order o", Order.class);
         typedQuery.setHint("javax.persistence.fetchgraph", entityGraph);
