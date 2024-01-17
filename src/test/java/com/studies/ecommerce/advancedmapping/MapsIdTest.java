@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class MapsIdTest extends EntityManagerTest {
 
@@ -47,6 +48,7 @@ public class MapsIdTest extends EntityManagerTest {
         orderItem.setProduct(product);
         orderItem.setProductPrice(product.getPrice());
         orderItem.setAmount(1);
+        order.setItems(List.of(orderItem));
 
         entityManager.getTransaction().begin();
         entityManager.persist(order);

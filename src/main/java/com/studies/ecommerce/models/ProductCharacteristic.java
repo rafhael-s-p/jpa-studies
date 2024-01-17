@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -15,9 +16,11 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ProductCharacteristic {
 
+    @NotBlank
     @Column(length = 100, nullable = false)
     private String name;
 
+    @NotBlank
     private String value;
 
 }

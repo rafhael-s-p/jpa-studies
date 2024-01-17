@@ -2,10 +2,14 @@ package com.studies.ecommerce.models;
 
 import com.studies.ecommerce.dto.ProductDTO;
 import com.studies.ecommerce.listener.GenericListener;
+import com.studies.ecommerce.models.converter.BooleanToYesNoConverter;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -54,6 +58,7 @@ import java.util.List;
         indexes = { @Index(name = "idx_product_name", columnList = "name") })
 public class Product extends BaseEntity {
 
+    @NotBlank
     @Column(length = 100, nullable = false) // default length 255
     private String name;
 
@@ -67,9 +72,18 @@ public class Product extends BaseEntity {
     @Column(name = "product_photo")
     private byte[] productPhoto;
 
+    @Convert(converter = BooleanToYesNoConverter.class)
+    @NotNull
+    @Column(length = 3, nullable = false)
+    private Boolean active = Boolean.FALSE;
+
+    @PastOrPresent
+    @NotNull
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
+    @PastOrPresent
+    @NotNull
     @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
 

@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class SavingFilesTest extends EntityManagerTest {
@@ -38,6 +39,7 @@ public class SavingFilesTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         Product product = entityManager.find(Product.class, 1);
         product.setProductPhoto(loadProductPhoto());
+        product.setUpdatedAt(LocalDateTime.now());
         entityManager.getTransaction().commit();
 
         entityManager.clear();
