@@ -16,6 +16,17 @@ import java.util.List;
 public class EntityGraphTest extends EntityManagerTest {
 
     @Test
+    public void findEssentialAttributesThroughNamedEntityGraphs() {
+        EntityGraph<?> entityGraph = entityManager.createEntityGraph("Order.essentialAttributes");
+        entityGraph.addAttributeNodes("payment");
+
+        TypedQuery<Order> typedQuery = entityManager.createQuery("select o from Order o", Order.class);
+        typedQuery.setHint("javax.persistence.fetchgraph", entityGraph);
+        List<Order> list = typedQuery.getResultList();
+        Assert.assertFalse(list.isEmpty());
+    }
+
+    @Test
     public void findEssentialAttributesOfOrder02() {
         EntityGraph<Order> entityGraph = entityManager.createEntityGraph(Order.class);
         entityGraph.addAttributeNodes(Order_.createdAt, Order_.status, Order_.total);
