@@ -33,3 +33,5 @@ build/
 .vscode/
 
 git_wrapper.sh
+
+*.log
