@@ -36,7 +36,7 @@ public class CacheTest {
         System.out.println("Find from instance 1 (First Level Cache):");
         entityManager1.find(Order.class, 1);
 
-        System.out.println("Find from instance 2:");
+        System.out.println("Find from instance 2 (Second Level Cache):");
         entityManager2.find(Order.class, 1);
     }
 
