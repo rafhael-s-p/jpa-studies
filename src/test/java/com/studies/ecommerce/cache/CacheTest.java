@@ -24,6 +24,19 @@ public class CacheTest {
         entityManagerFactory.close();
     }
 
+    @Test
+    public void addOrderEntityOnCache() {
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+
+        System.out.println("Find from instance 1:");
+        entityManager1
+                .createQuery("select o from Order o", Order.class)
+                .getResultList();
+
+        System.out.println("Find from instance 2:");
+        entityManager2.find(Order.class, 1);
+    }
 
     @Test
     public void findFromCache() {
