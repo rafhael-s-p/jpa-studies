@@ -2,6 +2,7 @@ package com.studies.ecommerce.cache;
 
 import com.studies.ecommerce.models.Order;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -23,6 +24,21 @@ public class CacheTest {
     @AfterClass
     public static void tearDownAfterClass() {
         entityManagerFactory.close();
+    }
+
+    @Test
+    public void checkCacheEntity() {
+        Cache cache = entityManagerFactory.getCache();
+
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+
+        System.out.println("Find from instance 1:");
+        entityManager1
+                .createQuery("select o from Order o", Order.class)
+                .getResultList();
+
+        Assert.assertTrue(cache.contains(Order.class, 1));
+        Assert.assertTrue(cache.contains(Order.class, 2));
     }
 
     @Test
