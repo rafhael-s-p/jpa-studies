@@ -25,6 +25,37 @@ public class CacheTest {
         entityManagerFactory.close();
     }
 
+    private static void myWaiting(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000L);
+        } catch (InterruptedException e) {}
+    }
+
+    private static void log(Object obj) {
+        System.out.println("[LOG " + System.currentTimeMillis() + "] " + obj);
+    }
+
+    @Test
+    public void ehcache() {
+        Cache cache = entityManagerFactory.getCache();
+
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+
+        log("Finding and including on cache...");
+        entityManager1
+                .createQuery("select o from Order o", Order.class)
+                .getResultList();
+        log("---");
+
+        myWaiting(1);
+        Assert.assertTrue(cache.contains(Order.class, 2));
+        entityManager2.find(Order.class, 2);
+
+        myWaiting(3);
+        Assert.assertFalse(cache.contains(Order.class, 2));
+    }
+
     @Test
     public void manageCacheDynamically() {
         // javax.persistence.cache.retrieveMode CacheRetrieveMode
