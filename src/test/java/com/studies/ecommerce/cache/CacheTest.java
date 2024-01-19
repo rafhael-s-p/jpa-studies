@@ -27,6 +27,20 @@ public class CacheTest {
     }
 
     @Test
+    public void checkCacheOptions() {
+        Cache cache = entityManagerFactory.getCache();
+
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+
+        System.out.println("Find from instance 1:");
+        entityManager1
+                .createQuery("select o from Order o", Order.class)
+                .getResultList();
+
+        Assert.assertTrue(cache.contains(Order.class, 1));
+    }
+
+    @Test
     public void checkCacheEntity() {
         Cache cache = entityManagerFactory.getCache();
 
