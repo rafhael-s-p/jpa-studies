@@ -37,6 +37,7 @@ public class OptimisticLockTest {
         } catch (InterruptedException e) {}
     }
 
+    // Optimistic Lock only throws an exception for no treated concurrent transactions from column annotated as @version at the entity.
     @Test
     public void optimisticLock() {
         Runnable runnable1 = () -> {
