@@ -24,6 +24,9 @@ public class OrderItem {
     @EmbeddedId
     private OrderItemId id;
 
+    @Version
+    private Integer version;
+
     @NotNull
     @MapsId("orderId")
     @ManyToOne(optional = false)
