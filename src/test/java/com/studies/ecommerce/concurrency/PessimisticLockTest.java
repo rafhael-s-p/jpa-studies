@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
 import javax.persistence.Persistence;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PessimisticLockTest {
 
@@ -37,6 +38,92 @@ public class PessimisticLockTest {
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {}
+    }
+
+    @Test
+    public void typedQueryLock() {
+        Runnable runnable1 = () -> {
+            log("Starting Runnable 01.");
+
+            String newDescription = "Detailed Description. CTM: " + System.currentTimeMillis();
+
+            EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+            entityManager1.getTransaction().begin();
+
+            log("Runnable 01 will load product 1.");
+            List<Product> list = entityManager1
+                    .createQuery("select p from Product p where p.id in (3, 4, 5)")
+                    .setLockMode(LockModeType.PESSIMISTIC_READ)
+                    .getResultList();
+
+            Product product = list
+                    .stream()
+                    .filter(p -> p.getId().equals(3))
+                    .findFirst()
+                    .get();
+
+            log("Runnable 01 will update the product.");
+            product.setDescription(newDescription);
+            product.setUpdatedAt(LocalDateTime.now());
+
+            log("Runnable 01 will wait for 3 second(s).");
+            myWaiting(3);
+
+            log("Runnable 01 will confirm the transaction.");
+            entityManager1.getTransaction().commit();
+            entityManager1.close();
+
+            log("Finishing Runnable 01.");
+        };
+
+        Runnable runnable2 = () -> {
+            log("Starting Runnable 02.");
+
+            String newDescription = "Nice Description! CTM: " + System.currentTimeMillis();
+
+            EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+            entityManager2.getTransaction().begin();
+
+            log("Runnable 02 will load product 2.");
+            Product product = entityManager2.find(
+                    Product.class, 1, LockModeType.PESSIMISTIC_WRITE);
+
+            log("Runnable 02 will change the product.");
+            product.setDescription(newDescription);
+            product.setUpdatedAt(LocalDateTime.now());
+
+            log("Runnable 02 will wait for 1 second(s).");
+            myWaiting(1);
+
+            log("Runnable 02 will confirm the transaction.");
+            entityManager2.getTransaction().commit();
+            entityManager2.close();
+
+            log("Finishing Runnable 02.");
+        };
+
+        Thread thread1 = new Thread(runnable1);
+        Thread thread2 = new Thread(runnable2);
+
+        thread1.start();
+
+        myWaiting(1);
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        EntityManager entityManager3 = entityManagerFactory.createEntityManager();
+        Product produto = entityManager3.find(Product.class, 1);
+        entityManager3.close();
+
+        Assert.assertTrue(produto.getDescription().startsWith("Nice Description!"));
+
+        log("Finishing test method.");
     }
 
     /*
