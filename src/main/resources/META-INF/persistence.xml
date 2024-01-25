@@ -22,8 +22,10 @@
             <property name="hibernate.multiTenancy" value="SCHEMA" />
             <property name="hibernate.tenant_identifier_resolver"
                       value="com.studies.ecommerce.hibernate.EcmCurrentTenantIdentifierResolver"/>
+            <!--<property name="hibernate.multi_tenant_connection_provider"
+                      value="com.studies.ecommerce.hibernate.EcmSchemaMultiTenantConnectionProvider"/>-->
             <property name="hibernate.multi_tenant_connection_provider"
-                      value="com.studies.ecommerce.hibernate.EcmSchemaMultiTenantConnectionProvider"/>
+                      value="com.studies.ecommerce.hibernate.EcmMachineMultiTenantConnectionProvider"/>
 
             <!--<property name="hibernate.hikari.maximumPoolSize" value="8" />
             <property name="hibernate.connection.provider_class"
