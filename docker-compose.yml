@@ -15,3 +15,4 @@ services:
       - ~/Projects/docker/mysql/ecommerce-data:/var/lib/mysql
 #SET GLOBAL log_bin_trust_function_creators=1;
 #SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+#clean -U package jetty:run -Dmaven.test.skip=true
