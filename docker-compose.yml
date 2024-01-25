@@ -6,8 +6,8 @@ services:
     container_name: ecommerce-mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: ecommerce
-      MYSQL_USER: ecommerce_user
+      MYSQL_DATABASE: db1_ecommerce
+      MYSQL_USER: user_one_ecommerce
       MYSQL_PASSWORD: 123456
     ports:
       - "3306:3306"
@@ -15,3 +15,4 @@ services:
       - ~/Projects/docker/mysql/ecommerce-data:/var/lib/mysql
 #SET GLOBAL log_bin_trust_function_creators=1;
 #SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+#clean -U package jetty:run -Dmaven.test.skip=true
