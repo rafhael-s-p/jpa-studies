@@ -1,20 +1,9 @@
 package com.studies.ecommerce.concurrency;
 
+import com.studies.ecommerce.EntityManagerFactoryTest;
 import org.junit.Test;
 
-public class ThreadTest {
-
-    private static void log(Object obj, Object... args) {
-        System.out.println(
-                String.format("[LOG " + System.currentTimeMillis() + "] " + obj, args)
-        );
-    }
-
-    private static void myWaiting(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000);
-        } catch (InterruptedException e) {}
-    }
+public class ThreadTest extends EntityManagerFactoryTest {
 
     @Test
     public void runningThreads() {
