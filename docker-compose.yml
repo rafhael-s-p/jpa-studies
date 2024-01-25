@@ -6,8 +6,8 @@ services:
     container_name: ecommerce-mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: ecommerce
-      MYSQL_USER: ecommerce_user
+      MYSQL_DATABASE: db1_ecommerce
+      MYSQL_USER: user_one_ecommerce
       MYSQL_PASSWORD: 123456
     ports:
       - "3306:3306"
