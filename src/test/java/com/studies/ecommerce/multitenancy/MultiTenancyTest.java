@@ -14,13 +14,13 @@ public class MultiTenancyTest extends EntityManagerFactoryTest {
     @Test
     public void machineApproach() {
 
-        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("machine_1");
+        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("machine-one");
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         Product product1 = entityManager1.find(Product.class, 1);
         Assert.assertEquals("Kindle", product1.getName());
         entityManager1.close();
 
-        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("machine_2");
+        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("machine-two");
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
         Product product2 = entityManager2.find(Product.class, 1);
         Assert.assertEquals("Kindle", product2.getName());
