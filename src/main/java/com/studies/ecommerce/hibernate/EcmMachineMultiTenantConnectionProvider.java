@@ -71,12 +71,12 @@ public class EcmMachineMultiTenantConnectionProvider implements
     public void start() {
         connectionProviders = new HashMap<>();
 
-        setTenant("machine_1",
+        setTenant("machine-one",
                 "jdbc:mysql://localhost/ecommerce?createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC",
                 "root",
                 "123456");
 
-        setTenant("machine_2",
+        setTenant("machine-two",
                 "jdbc:mysql://localhost/ecommerce_second_client?createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC",
                 "root",
                 "123456");
