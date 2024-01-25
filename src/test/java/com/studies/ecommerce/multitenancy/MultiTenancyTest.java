@@ -14,13 +14,13 @@ public class MultiTenancyTest extends EntityManagerFactoryTest {
     @Test
     public void machineApproach() {
 
-        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("machine-one");
+        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("host1_ecommerce");
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         Product product1 = entityManager1.find(Product.class, 1);
         Assert.assertEquals("Kindle", product1.getName());
         entityManager1.close();
 
-        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("machine-two");
+        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("host2_ecommerce");
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
         Product product2 = entityManager2.find(Product.class, 1);
         Assert.assertEquals("Kindle", product2.getName());
@@ -31,13 +31,13 @@ public class MultiTenancyTest extends EntityManagerFactoryTest {
     @Test
     public void schemaApproach() {
 
-        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("ecommerce");
+        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("db1_ecommerce");
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         Product product1 = entityManager1.find(Product.class, 1);
         Assert.assertEquals("Kindle", product1.getName());
         entityManager1.close();
 
-        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("ecommerce_second_client");
+        EcmCurrentTenantIdentifierResolver.setTenantIdentifier("db2_ecommerce");
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
         Product product2 = entityManager2.find(Product.class, 1);
         Assert.assertEquals("Kindle", product2.getName());
