@@ -23,10 +23,11 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/{id}/update")
-    public ModelAndView update(@PathVariable Integer id,
-                                  @RequestParam Map<String, Object> product,
-                                  RedirectAttributes redirectAttributes) {
-        service.update(id, product);
+    public ModelAndView update(@RequestAttribute String tenant,
+                               @PathVariable Integer id,
+                               @RequestParam Map<String, Object> product,
+                               RedirectAttributes redirectAttributes) {
+        service.update(id, tenant, product);
 
         redirectAttributes.addFlashAttribute("message", "Update done successfully!");
 
@@ -34,15 +35,17 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/update")
-    public ModelAndView update(@PathVariable Integer id) {
-        return newProduct(products.find(id));
+    public ModelAndView update(@RequestAttribute String tenant,
+                               @PathVariable Integer id) {
+        return newProduct(products.find(id, tenant));
     }
 
     @PostMapping("/new")
-    public ModelAndView save(Product product,
+    public ModelAndView save(@RequestAttribute String tenant,
+                             Product product,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes) {
-        Product updatedProduct = service.save(product);
+        Product updatedProduct = service.save(tenant, product);
 
         redirectAttributes.addFlashAttribute("message", "Registration created successfully!");
 
@@ -58,9 +61,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public ModelAndView list() {
+    public ModelAndView list(@RequestAttribute String tenant) {
         ModelAndView mv = new ModelAndView("products/products-list");
-        mv.addObject("products", products.list());
+        mv.addObject("products", products.list(tenant));
 
         return mv;
     }

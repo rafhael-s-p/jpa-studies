@@ -18,7 +18,8 @@ public class ProductService {
     private Products products;
 
     @Transactional
-    public Product save(Product product) {
+    public Product save(String tenant, Product product) {
+        product.setTenant(tenant);
         product.setCreatedAt(LocalDateTime.now());
         product.setUpdatedAt(LocalDateTime.now());
 
@@ -26,8 +27,8 @@ public class ProductService {
     }
 
     @Transactional
-    public Product update(Integer id, Map<String, Object> product) {
-        Product currentProduct = products.find(id);
+    public Product update(Integer id, String tenant, Map<String, Object> product) {
+        Product currentProduct = products.find(id, tenant);
 
         try {
             BeanUtils.populate(currentProduct, product);
