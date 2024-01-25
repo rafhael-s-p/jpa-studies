@@ -1,20 +1,20 @@
-insert into tab_product (id, version, name, price, created_at, active, description) values (1, 0, 'Kindle', 799.0, date_sub(sysdate(), interval 1 day), 'YES', 'Meet the new Kindle, now with adjustable built-in lighting, which allows you to read indoors or outdoors, at any time of the day.');
-insert into tab_product (id, version, name, price, created_at, active, description) values (3, 0, 'GoPro Hero 7 Camera', 1500.0, date_sub(sysdate(), interval 1 day), 'YES', '2x better performance.');
-insert into tab_product (id, version, name, price, created_at, active, description) values (4, 0, 'Canon 80D Camera', 3500.0, sysdate(), 'YES', 'The best focus adjustment.');
-insert into tab_product (id, version, name, price, created_at, active, description) values (5, 0, 'Lapel microphone', 80.0, sysdate(), 'NO', 'Good sound capture.');
+insert into tab_product (id, tenant, version, name, price, created_at, active, description) values (1, 'host2', 0, 'Kindle', 799.0, date_sub(sysdate(), interval 1 day), 'YES', 'Meet the new Kindle, now with adjustable built-in lighting, which allows you to read indoors or outdoors, at any time of the day.');
+insert into tab_product (id, tenant, version, name, price, created_at, active, description) values (3, 'host2', 0, 'GoPro Hero 7 Camera', 1500.0, date_sub(sysdate(), interval 1 day), 'YES', '2x better performance.');
+insert into tab_product (id, tenant, version, name, price, created_at, active, description) values (4, 'host2', 0, 'Canon 80D Camera', 3500.0, sysdate(), 'YES', 'The best focus adjustment.');
+insert into tab_product (id, tenant, version, name, price, created_at, active, description) values (5, 'host2', 0, 'Lapel microphone', 80.0, sysdate(), 'NO', 'Good sound capture.');
 
-insert into tab_client (id, version, name, ssn) values (1, 0, 'Jenni Jacklyn', "051781594");
-insert into tab_client (id, version, name, ssn) values (2, 0, 'Georgie Esther', "040468979");
+insert into tab_client (id, tenant, version, name, ssn) values (1, 'host2', 0, 'Jenni Jacklyn', "051781594");
+insert into tab_client (id, tenant, version, name, ssn) values (2, 'host2', 0, 'Georgie Esther', "040468979");
 
 insert into tab_client_detail (client_id, gender, birthday) values (1, 'FEMALE', date_sub(sysdate(), interval 31 year));
 insert into tab_client_detail (client_id, gender, birthday) values (2, 'FEMALE', date_sub(sysdate(), interval 31 year));
 
-insert into tab_order (id, version, client_id, created_at, total, status) values (1, 0, 1, date_sub(sysdate(), interval 32 day), 2398.0, 'WAITING');
-insert into tab_order (id, version, client_id, created_at, total, status) values (2, 0, 1, date_sub(sysdate(), interval 5 day), 499.0, 'WAITING');
-insert into tab_order (id, version, client_id, created_at, total, status) values (3, 0, 1, date_sub(sysdate(), interval 4 day), 3500.0, 'PAID');
-insert into tab_order (id, version, client_id, created_at, total, status) values (4, 0, 2, date_sub(sysdate(), interval 2 day), 499.0, 'PAID');
-insert into tab_order (id, version, client_id, created_at, total, status) values (5, 0, 1, date_sub(sysdate(), interval 2 day), 799.0, 'PAID');
-insert into tab_order (id, version, client_id, created_at, total, status) values (6, 0, 2, sysdate(), 799.0, 'WAITING');
+insert into tab_order (id, tenant, version, client_id, created_at, total, status) values (1, 'host2', 0, 1, date_sub(sysdate(), interval 32 day), 2398.0, 'WAITING');
+insert into tab_order (id, tenant, version, client_id, created_at, total, status) values (2, 'host2', 0, 1, date_sub(sysdate(), interval 5 day), 499.0, 'WAITING');
+insert into tab_order (id, tenant, version, client_id, created_at, total, status) values (3, 'host2', 0, 1, date_sub(sysdate(), interval 4 day), 3500.0, 'PAID');
+insert into tab_order (id, tenant, version, client_id, created_at, total, status) values (4, 'host2', 0, 2, date_sub(sysdate(), interval 2 day), 499.0, 'PAID');
+insert into tab_order (id, tenant, version, client_id, created_at, total, status) values (5, 'host2', 0, 1, date_sub(sysdate(), interval 2 day), 799.0, 'PAID');
+insert into tab_order (id, tenant, version, client_id, created_at, total, status) values (6, 'host2', 0, 2, sysdate(), 799.0, 'WAITING');
 
 insert into tab_order_item (order_id, product_id, product_price, amount) values (1, 1, 499, 2);
 insert into tab_order_item (order_id, product_id, product_price, amount) values (1, 3, 1400, 1);
@@ -24,13 +24,13 @@ insert into tab_order_item (order_id, product_id, product_price, amount) values 
 insert into tab_order_item (order_id, product_id, product_price, amount) values (5, 1, 799, 1);
 insert into tab_order_item (order_id, product_id, product_price, amount) values (6, 1, 799, 1);
 
-insert into tab_payment (order_id, version, status, payment_type, card_number, bar_code) values (1, 0, 'PROCESSING', 'card', '5123716344050151', null);
-insert into tab_payment (order_id, version, status, payment_type, card_number, bar_code) values (2, 0, 'RECEIVED', 'card', '5123716344050152', null);
-insert into tab_payment (order_id, version, status, payment_type, card_number, bar_code, due_date) values (3, 0, 'RECEIVED', 'slip', null, '5123716344050153', date_sub(sysdate(), interval 2 day));
-insert into tab_payment (order_id, version, status, payment_type, card_number, bar_code) values (4, 0, 'PROCESSING', 'card', '5123716344050151', null);
-insert into tab_payment (order_id, version, status, payment_type, card_number, bar_code, due_date) values (6, 0, 'PROCESSING', 'slip', null, '5123716344050154', date_sub(sysdate(), interval 2 day));
+insert into tab_payment (order_id, tenant, version, status, payment_type, card_number, bar_code) values (1, 'host2', 0, 'PROCESSING', 'card', '5123716344050151', null);
+insert into tab_payment (order_id, tenant, version, status, payment_type, card_number, bar_code) values (2, 'host2', 0, 'RECEIVED', 'card', '5123716344050152', null);
+insert into tab_payment (order_id, tenant, version, status, payment_type, card_number, bar_code, due_date) values (3, 'host2', 0, 'RECEIVED', 'slip', null, '5123716344050153', date_sub(sysdate(), interval 2 day));
+insert into tab_payment (order_id, tenant, version, status, payment_type, card_number, bar_code) values (4, 'host2', 0, 'PROCESSING', 'card', '5123716344050151', null);
+insert into tab_payment (order_id, tenant, version, status, payment_type, card_number, bar_code, due_date) values (6, 'host2', 0, 'PROCESSING', 'slip', null, '5123716344050154', date_sub(sysdate(), interval 2 day));
 
-insert into tab_invoice (order_id, version, xml, emission_date) values (2, 0, '<xml><xml/>', sysdate());
+insert into tab_invoice (order_id, tenant, version, xml, emission_date) values (2, 'host2', 0, '<xml><xml/>', sysdate());
 
 insert into tab_category (name, version) values ('Electronics', 0);
 insert into tab_category (name, version) values ('Books', 0);
