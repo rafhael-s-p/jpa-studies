@@ -24,7 +24,7 @@ import java.util.Map;
         foreignKey = @ForeignKey(name = "fk_client_detail_client"))
 @Entity
 @Table(name = "tab_client",
-        uniqueConstraints = { @UniqueConstraint(name = "unq_ssn", columnNames = { "ssn" }) },
+        uniqueConstraints = { @UniqueConstraint(name = "unq_client_ssn", columnNames = { "ssn" }) },
         indexes = { @Index(name = "idx_client_name", columnList = "name") })
 public class Client extends BaseEntity {
 

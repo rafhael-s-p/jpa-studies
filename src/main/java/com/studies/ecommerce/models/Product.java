@@ -54,7 +54,7 @@ import java.util.List;
 @EntityListeners({ GenericListener.class })
 @Entity
 @Table(name = "tab_product",
-        uniqueConstraints = { @UniqueConstraint(name = "unq_name", columnNames = { "name" }) },
+        uniqueConstraints = { @UniqueConstraint(name = "unq_product_name", columnNames = { "name" }) },
         indexes = { @Index(name = "idx_product_name", columnList = "name") })
 public class Product extends BaseEntity {
 
@@ -62,7 +62,6 @@ public class Product extends BaseEntity {
     @Column(length = 100, nullable = false) // default length 255
     private String name;
 
-    @Lob
     private String description;
 
     @Column(precision = 18, scale = 2) // Default precision, scale is 19, 2

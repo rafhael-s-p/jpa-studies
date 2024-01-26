@@ -2,6 +2,7 @@ package com.studies.ecommerce.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -25,6 +26,7 @@ public class Invoice extends BaseEntity {
     @NotEmpty
     @Column(nullable = false)
     @Lob
+    @Type(type="org.hibernate.type.BinaryType")
     private byte[] xml;
 
     @PastOrPresent
