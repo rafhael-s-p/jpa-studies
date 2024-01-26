@@ -1,14 +1,41 @@
 package com.studies.ecommerce.concurrency;
 
-import com.studies.ecommerce.EntityManagerFactoryTest;
 import com.studies.ecommerce.models.Product;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 
-public class OptimisticLockTest extends EntityManagerFactoryTest {
+public class OptimisticLockTest {
+
+    protected static EntityManagerFactory entityManagerFactory;
+
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        entityManagerFactory = Persistence.createEntityManagerFactory("Ecommerce-PU");
+    }
+
+    @AfterClass
+    public static void tearDownAfterClass() {
+        entityManagerFactory.close();
+    }
+
+    private static void log(Object obj, Object... args) {
+        System.out.println(
+                String.format("[LOG " + System.currentTimeMillis() + "] " + obj, args)
+        );
+    }
+
+    private static void myWaiting(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {}
+    }
 
     // Optimistic Lock only throws an exception for no treated concurrent transactions from column annotated as @version at the entity.
     @Test
