@@ -5,9 +5,9 @@ drop table if exists tab_product_ecm;
 drop table if exists tab_product_erp;
 drop table if exists tab_category_ecm;
 
-drop procedure if exists find_product_name;
-drop procedure if exists clients_who_bought_above_average;
-drop procedure if exists adjust_price_product;
+drop function if exists find_product_name;
+drop function if exists clients_who_bought_above_average;
+drop function if exists adjust_price_product;
 
 drop view if exists clients_who_bought_above_average_view;
 
