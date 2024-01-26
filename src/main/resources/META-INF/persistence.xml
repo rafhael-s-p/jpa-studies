@@ -13,11 +13,10 @@
         <validation-mode>CALLBACK</validation-mode>
 
         <properties>
-            <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost/ecommerce?createDatabaseIfNotExist=true&amp;useTimezone=true&amp;serverTimezone=UTC" />
-            <property name="javax.persistence.jdbc.user" value="ecommerce_user" />
-            <property name="javax.persistence.jdbc.password" value="123456" />
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/ecommerce" />
+            <property name="javax.persistence.jdbc.user" value="postgres" />
+            <property name="javax.persistence.jdbc.password" value="postgres" />
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 
             <property name="hibernate.hikari.maximumPoolSize" value="8" />
             <property name="hibernate.connection.provider_class"
@@ -46,7 +45,7 @@
             <property name="javax.persistence.schema-generation.scripts.drop-target"
                       value="/tmp/sql/exported-drop.sql"/>
 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect" />
 
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
